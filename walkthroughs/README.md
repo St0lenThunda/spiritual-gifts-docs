@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-20 | [Service Layer Refactoring](./2025-12-20-service-layer-refactoring.md) | Extracted business logic into AuthService and SurveyService |
 | 2025-12-20 | [Security Hardening](./2025-12-20-security-hardening.md) | HttpOnly JWT cookies, rate limiting, production gate, input validation |
 | 2025-12-19 | [Server Latency Mitigation](./2025-12-19-server-latency-mitigation.md) | Render/Netlify cold-start mitigations |
 | 2025-12-19 | [Scripture Data Migration](./2025-12-19-scripture-data-migration.md) | Moved scripture data from frontend to backend |
