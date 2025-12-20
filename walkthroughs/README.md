@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-20 | [Project Notes Update](./2025-12-20-project-notes-update.md) | Refreshed project notes with completed items and new suggestions |
 | 2025-12-20 | [Data Integrity Setup](./2025-12-20-data-integrity-setup.md) | Alembic migrations and .env.example documentation |
 | 2025-12-20 | [Service Layer Refactoring](./2025-12-20-service-layer-refactoring.md) | Extracted business logic into AuthService and SurveyService |
 | 2025-12-20 | [Security Hardening](./2025-12-20-security-hardening.md) | HttpOnly JWT cookies, rate limiting, production gate, input validation |
