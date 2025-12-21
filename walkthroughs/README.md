@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [Strategic Backend Test Coverage](./2025-12-21-strategic-backend-test-coverage.md) | Achieved 99.4% backend coverage by targeting edge cases and admin routes |
 | 2025-12-21 | [Expanded Frontend Testing](./2025-12-21-expanded-frontend-testing.md) | 14 new Vitest unit tests for Assessment Wizard and its subcomponents |
 | 2025-12-21 | [Admin Panel Enhancements](./2025-12-21-admin-panel-enhancements.md) | RBAC fixes, advanced filtering/sorting, and nested navigation refactor |
 | 2025-12-21 | [Test Coverage Optimization](./2025-12-21-test-coverage-optimization.md) | Achieved 96% backend coverage across routers, services, and database |
