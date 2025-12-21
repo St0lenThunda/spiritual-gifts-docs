@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 17:35:00*
+*Updated on: 2025-12-21 18:05:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -114,6 +114,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Automated Database ERD View**: Integrated a dynamic schema visualization tool into the Admin Dashboard using Mermaid.js, automatically synchronized with SQLAlchemy models. **[Maintainability]**
 - ✅ **Admin Dashboard Component Refactor**: Decomposed `AdminDashboard.vue` into specialized sub-components (`LogTable`, `UserTable`, `AdminFilterBar`), improving readability and maintainability. **[Maintainability]**
 - ✅ **Interactive ERD Viewer**: Added Zoom and Pan capabilities (0.1x-5x) to the Database Schema viewer, enabling deep exploration of complex table relationships. **[User Experience]**
+- ✅ **Admin Pagination & Filtering**: Implemented server-side pagination (Log/User) and UI toggles for robust data management. **[Scalability]**
 ---
 </details>
 
@@ -249,6 +250,18 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Utility modules (e.g., logging) manually instantiate database sessions.
   - **Reason**: Inconsistent session lifecycle management can lead to orphaned connections or transaction deadlocks.
   - **Proposed**: Standardize all non-request database access using a context manager pattern (`with SessionLocal() as db:`) to guarantee cleanup.
+- **Dynamic Mermaid.js Loading**: **[Performance]**
+  - **Current**: `mermaid` is imported statically in `SchemaERD.vue`.
+  - **Reason**: Mermaid is a large library (~1MB). Loading it upfront increases the initial bundle size for the Admin chunk, even if the user never views the schema tab.
+  - **Proposed**: Use dynamic imports (`await import('mermaid')`) to load the library only when the Schema Explorer is activated.
+- **User Survey Pagination**: **[Scalability]**
+  - **Current**: `GET /user/surveys` returns the full history of a user's assessments.
+  - **Reason**: While currently manageable, loyal users with many retakes will eventually degrade dashboard performance.
+  - **Proposed**: Implement limit/offset pagination for the survey history endpoint.
+- **PII Redaction in Logs**: **[Privacy]**
+  - **Current**: Full user emails are included in structured access logs.
+  - **Reason**: Storing unnecessary PII (Personal Identifiable Information) in logs increases privacy risk and compliance burden (GDPR/CCPA).
+  - **Proposed**: Mask identifying fields in logs (e.g. `j***@example.com`) or log only the immutable `user_id`.
 
 ---
 </details>
