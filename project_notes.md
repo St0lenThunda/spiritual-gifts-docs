@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 00:50:00*
+*Updated on: 2025-12-21 01:10:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -20,7 +20,7 @@ This report provides a technical overview of the current implementation and offe
 - **Database**: PostgreSQL (hosted via Neon)
 - **ORM**: SQLAlchemy + Alembic migrations
 - **Authentication**: Custom Magic Link (Passwordless) + JWT Session Management (HttpOnly Cookies)
-- **Observability**: Structured Logging (`structlog`) with database storage of events and errors. Correlated with frontend via `X-Request-ID`.
+- **Observability**: Structured Logging (`structlog`) with database storage of events and errors. Correlated with frontend via `X-Request-ID`. Centralized global exception handling.
 - **Rate Limiting**: slowapi (3 requests/10min on auth endpoints) with audit logging of breaches.
 
 ---
@@ -89,6 +89,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Loading States**: Implemented skeleton loaders for `Dashboard` and `Results` pages.
 - ✅ **Gift Definitions Navigation**: Resolved issue where `/definitions?gift=Name` URL failed to select or scroll to the specific gift.
 - ✅ **Navigation UI Highlights**: Updated `App.vue` to correctly highlight "THE GIFTS" in the top bar when viewing gift definitions.
+- ✅ **Standardized Error Handling**: Centralized exception management in `main.py`, removing redundant `try/except` blocks from `routers.py`.
 - ✅ **Stability Fixes**: Resolved Vue prop-type validation warning for the `StatsCard` component icon.
 ### **📈 Monitoring & Observability (Completed 2025-12-21)**
 - ✅ **Structured Logging**: Implemented `structlog` with a Neon database sink, request middleware, and authenticated user context capturing.
@@ -108,8 +109,12 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Transition the frontend to **TypeScript** for better type safety and self-documenting code.
 - **API Documentation Enrichment**:
   - **Proposed**: Add detailed descriptions and examples to Pydantic schemas to enhance the auto-generated Swagger/OpenAPI documentation.
-- **Standardized Error Handling**:
-  - **Proposed**: Refactor `routers.py` to remove redundant `try/except` blocks for database operations, relying on a global exception handler in `main.py` for consistent 500 mapping and logging.
+- **Test Coverage**:
+  - **Proposed**: Add integration tests for the service layer and increase overall coverage.
+- **API Versioning**:
+  - **Proposed**: Introduce API versioning (e.g., `/api/v1/`) to ensure backward compatibility as the system evolves. **[Architecture]**
+- **E2E Testing**:
+  - **Proposed**: Implement End-to-End (E2E) testing with Playwright or Cypress to verify critical user flows (Login -> Assessment -> Results). **[Engineering Excellence]**
 
 ### **🎨 User Experience**
 - ✅ **Frontend Logout UI**: Implemented logout buttons in both desktop navbar and mobile drawer, integrated with the `/auth/logout` endpoint.
@@ -122,14 +127,16 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Display `Request-ID` in the UI when an error occurs, allowing users to provide a reference code that developers can use to lookup exact logs.
 - **Database Health Monitoring**:
   - **Proposed**: Extend `/health` endpoint to verify database connectivity status and log connectivity failures.
+- **Log Retention & Rotation**:
+  - **Proposed**: Implement a retention policy and automatic rotation for database-backed logs to prevent unbounded table growth. **[Observability]**
 
 ### **🚀 DevOps**
 - **CI/CD Pipeline**:
   - **Proposed**: Set up GitHub Actions for automated testing on pull requests.
 - **Docker Containerization**:
   - **Proposed**: Create Dockerfile for consistent local and production environments.
-- **Health Check Enhancement**:
-  - **Proposed**: Extend `/health` endpoint to include database connectivity status.
+- **Security Hardening**:
+  - **Proposed**: Implement CSRF protection for session-based cookies and audit third-party dependencies for vulnerabilities. **[Security]**
 
 ---
 </details>

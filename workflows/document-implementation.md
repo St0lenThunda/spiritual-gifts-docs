@@ -27,7 +27,7 @@ Include these sections:
 **Status**: Completed ✅
 
 ## Summary
-Brief description of what was implemented.
+Brief description of what was implemented
 
 ## Issues Addressed / Features Added
 - Point 1
