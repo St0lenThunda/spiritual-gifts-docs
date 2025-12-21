@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 11:12:00*
+*Updated on: 2025-12-21 11:30:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -19,8 +19,8 @@ This report provides a technical overview of the current implementation and offe
 - **Framework**: FastAPI (Python)
 - **Database**: PostgreSQL (hosted via Neon)
 - **ORM**: SQLAlchemy + Alembic migrations
-- **Authentication**: Custom Magic Link (Passwordless) + JWT Session Management (HttpOnly Cookies)
-- **Observability**: Structured Logging (`structlog`) with database storage of events and errors. Correlated with frontend via `X-Request-ID`. Centralized global exception handling.
+- **Authentication**: Custom Magic Link (Passwordless) + JWT Session Management (HttpOnly Cookies) + **Role-Based Access Control (RBAC)**.
+- **Observability**: Structured Logging (`structlog`) with database storage of events and errors. Correlated with frontend via `X-Request-ID`. Centralized global exception handling. **Admin Dashboard** for log oversight.
 - **Rate Limiting**: slowapi (3 requests/10min on auth endpoints) with audit logging of breaches.
 
 ---
@@ -73,11 +73,13 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Production Gate for Dev Login**: `ENV=production` blocks dev login with 403.
 - ✅ **Input Validation**: Pydantic `Field(ge=1, le=5)` enforces score constraints.
 - ✅ **Logout Endpoint**: Implemented `/auth/logout` to clear session cookies server-side.
+- ✅ **Role-Based Access Control (RBAC)**: Integrated `admin` and `user` roles to protect administrative endpoints and views.
 
 ### **🛠️ Engineering Excellence (Completed 2025-12-20)**
 - ✅ **Component Naming**: Renamed `DirectionsModal` to `InstructionsModal` for improved clarity.
 - ✅ **Centralized Error Handling**: Unified API error management in `src/api/client.js` with consistent toast notifications.
 - ✅ **Frontend Logout UI**: Implemented session termination triggers in desktop and mobile navigation.
+- ✅ **Admin Dashboard**: Created a dedicated administrative interface for viewing system logs and user data.
 
 ### **💾 Data Integrity & Maintenance (Completed 2025-12-20)**
 - ✅ **Pydantic V2 Migration**: Migrated `schemas.py` and `config.py` to V2 syntax (`model_config`, `SettingsConfigDict`), eliminating deprecation warnings.
@@ -160,9 +162,9 @@ This report provides a technical overview of the current implementation and offe
 
 ### **📈 Analytics & Monitoring**
 - **Developer Audit UI**: **[Observability]**
-  - **Current**: Logs are stored in a database table but must be queried manually.
-  - **Reason**: Debugging production issues is slow if developers cannot easily browse and filter logs.
-  - **Proposed**: Create a protected administrative view to browse and filter `log_entries` directly from the dashboard.
+  - **Current**: Admin Dashboard provides basic log viewing.
+  - **Reason**: Debugging production issues requires advanced filtering and correlation.
+  - **Proposed**: Enhance the Admin Dashboard with full-text search and advanced date filtering for `log_entries`.
 - **Frontend Error Reporting**: **[Observability]**
   - **Current**: Errors are displayed as general "Request failed" messages.
   - **Reason**: Users cannot provide specific debugging information when they encounter an error.
@@ -189,6 +191,18 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Questions and gift definitions are stored in static JSON files.
   - **Reason**: Modifying content requires a code change and re-deployment.
   - **Proposed**: Move static content to the database and provide an administrative interface for easier content updates.
+- **Multi-Factor Authentication (MFA) for Admins**: **[Security]**
+  - **Current**: Admin accounts use standard magic link authentication.
+  - **Reason**: Administrative access is highly sensitive and requires an additional layer of protection.
+  - **Proposed**: Implement **[TOTP](https://en.wikipedia.org/wiki/Time-based_one-time_password)** (e.g., Google Authenticator) for users with the `admin` role.
+- **User Impersonation for Support**: **[Support]**
+  - **Current**: Admins cannot view the dashboard as a specific user.
+  - **Reason**: Troubleshooting user-specific issues (e.g., missing results) is difficult without seeing their view.
+  - **Proposed**: Add a "Login as User" feature for admins to safely impersonate users for support purposes.
+- **Automated Security Audits**: **[Security]**
+  - **Current**: Security reviews are manual.
+  - **Reason**: New vulnerabilities in dependencies can appear at any time.
+  - **Proposed**: Implement automated security scanning for Python dependencies (`safety`) and JavaScript packages (`npm audit`) in CI/CD.
 - **Internationalization (i18n)**: **[Logic & Features]**
   - **Current**: The application is only available in English.
   - **Reason**: To reach a global audience, the assessment and results should be available in multiple languages.
@@ -205,14 +219,6 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Every request for gifts or questions hits the database/file system.
   - **Reason**: These resources change infrequently and are ideal for performance optimization via caching.
   - **Proposed**: Implement caching for static/semi-static endpoints using **[Redis](https://redis.io/)** or in-memory cache.
-- **Role-Based Access Control (RBAC)**: **[Security]**
-  - **Current**: All authenticated users have the same permissions.
-  - **Reason**: Administrative features (like log viewing or content editing) must be protected from regular users.
-  - **Proposed**: Introduce user roles (e.g., `user`, `admin`) to protect sensitive endpoints.
-- **Admin Dashboard**: **[Logic & Features]**
-  - **Current**: No visual management tool for the application.
-  - **Reason**: Administrators need a way to view aggregate data and manage the system without direct DB access.
-  - **Proposed**: Create a management interface for editing gift definitions, questions, and viewing usage metrics.
 - **Database Schema Viz**: **[Maintainability]**
   - **Current**: No automated database documentation.
   - **Reason**: Understanding the data model becomes harder as more tables are added.
@@ -230,5 +236,5 @@ This report provides a technical overview of the current implementation and offe
 | **Maintainability** | 🟢 High | Low |
 | **Data Integrity** | 🟢 Managed | Low |
 | **Test Coverage** | 🟢 High (96%) | Low |
-| **Observability** | 🟢 High | Low |
+| **Observability** | 🟢 Mature | Low |
 | **DevOps** | 🟠 Manual | Medium |
