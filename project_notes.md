@@ -107,6 +107,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **API Versioning**: Introduced `/api/v1/` prefix to backend routes and updated frontend client.
 - ✅ **Assessment Wizard Component Testing**: Achieved comprehensive Vitest coverage for the core `AssessmentWizard`, `QuestionCard`, and `WizardNavigation` components.
 - ✅ **99%+ Backend Core Coverage**: Reached 99.4% backend coverage by implementing advanced test suites for Admin routers, edge-case service logic, and automated schema validation. **[Test Coverage]**
+- ✅ **Data Normalization**: Reconciled gift identifiers between `questions.json` and backend `SurveyService`. The backend now dynamically builds its scoring mapping from the questionnaire data, ensuring a unified source of truth. **[Data Integrity]**
 ---
 </details>
 
@@ -126,10 +127,6 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: No automated end-to-end tests.
   - **Reason**: Manual testing of the full user flow (Login -> Assessment -> Results) is time-consuming and prone to human error.
   - **Proposed**: Implement E2E testing with **[Playwright](https://playwright.dev/)** to verify critical user paths.
-- **Data Normalization**: **[Data Integrity]**
-  - **Current**: Gift identifiers are duplicated across `questions.json` and backend `GIFT_MAPPINGS`.
-  - **Reason**: Risk of inconsistency if a gift name or ID is updated in only one location.
-  - **Proposed**: Reconcile both sources into a single source of truth for gift identifiers.
 - **Database Index Optimization**: **[Architecture]**
   - **Current**: `surveys.user_id` is a foreign key but lacks an explicit index.
   - **Reason**: Query performance will degrade linearly as the number of users and surveys grows.
@@ -256,7 +253,7 @@ This report provides a technical overview of the current implementation and offe
 | **Architecture** | 🟢 Modularized | Low |
 | **Security** | 🟢 Hardened | Low |
 | **Maintainability** | 🟢 High | Low |
-| **Data Integrity** | 🟢 Managed | Low |
+| **Data Integrity** | 🟢 Unified | Low |
 | **Test Coverage** | 🟢 Mature (99%) | Low |
 | **Observability** | 🟢 Mature | Low |
 | **DevOps** | 🟠 Manual | Medium |
