@@ -108,6 +108,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Assessment Wizard Component Testing**: Achieved comprehensive Vitest coverage for the core `AssessmentWizard`, `QuestionCard`, and `WizardNavigation` components.
 - ✅ **99%+ Backend Core Coverage**: Reached 99.4% backend coverage by implementing advanced test suites for Admin routers, edge-case service logic, and automated schema validation. **[Test Coverage]**
 - ✅ **Data Normalization**: Reconciled gift identifiers between `questions.json` and backend `SurveyService`. The backend now dynamically builds its scoring mapping from the questionnaire data, ensuring a unified source of truth. **[Data Integrity]**
+- ✅ **Database Index Optimization**: Added an explicit index to `surveys.user_id` to ensure sub-millisecond lookup performance for user survey history. **[Architecture]**
 ---
 </details>
 
@@ -127,10 +128,7 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: No automated end-to-end tests.
   - **Reason**: Manual testing of the full user flow (Login -> Assessment -> Results) is time-consuming and prone to human error.
   - **Proposed**: Implement E2E testing with **[Playwright](https://playwright.dev/)** to verify critical user paths.
-- **Database Index Optimization**: **[Architecture]**
-  - **Current**: `surveys.user_id` is a foreign key but lacks an explicit index.
-  - **Reason**: Query performance will degrade linearly as the number of users and surveys grows.
-  - **Proposed**: Add an explicit database index to `surveys.user_id` to ensure sub-millisecond lookups.
+- **E2E Testing with Playwright**: **[Reliability]**
 - **Automated Accessibility Regression Suite**: **[Maintainability]**
   - **Current**: Accessibility is managed via manual review and a high-contrast mode toggle.
   - **Reason**: Visual and functional changes can easily degrade compliance with ARIA standards without immediate feedback.
@@ -250,7 +248,7 @@ This report provides a technical overview of the current implementation and offe
 | Category | Rating | Priority |
 | :--- | :--- | :--- |
 | **Logic & Features** | 🟢 Mature | Low |
-| **Architecture** | 🟢 Modularized | Low |
+| **Architecture** | 🟢 Optimized | Low |
 | **Security** | 🟢 Hardened | Low |
 | **Maintainability** | 🟢 High | Low |
 | **Data Integrity** | 🟢 Unified | Low |

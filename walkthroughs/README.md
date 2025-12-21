@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [DB Index Optimization](./2025-12-21-db-index-optimization.md) | Added explicit index to surveys.user_id for faster lookups |
 | 2025-12-21 | [Data Normalization](./2025-12-21-data-normalization.md) | Reconciled gift mappings and naming between frontend and backend |
 | 2025-12-21 | [Strategic Backend Test Coverage](./2025-12-21-strategic-backend-test-coverage.md) | Achieved 99.4% backend coverage by targeting edge cases and admin routes |
 | 2025-12-21 | [Expanded Frontend Testing](./2025-12-21-expanded-frontend-testing.md) | 14 new Vitest unit tests for Assessment Wizard and its subcomponents |
