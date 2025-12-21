@@ -6,6 +6,9 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [Automated ERD View](./2025-12-21-automated-erd-view.md) | Live database schema visualization in the Admin Panel |
+| 2025-12-21 | [Admin Sorting & Filtering](./2025-12-21-admin-sorting-filtering.md) | Multi-column interactive sorting for Logs and Users |
+| 2025-12-21 | [Gift Trend Analysis](./2025-12-21-gift-trend-analysis.md) | Interactive multi-line growth tracking for spiritual gifts |
 | 2025-12-21 | [DB Index Optimization](./2025-12-21-db-index-optimization.md) | Added explicit index to surveys.user_id for faster lookups |
 | 2025-12-21 | [Data Normalization](./2025-12-21-data-normalization.md) | Reconciled gift mappings and naming between frontend and backend |
 | 2025-12-21 | [Strategic Backend Test Coverage](./2025-12-21-strategic-backend-test-coverage.md) | Achieved 99.4% backend coverage by targeting edge cases and admin routes |

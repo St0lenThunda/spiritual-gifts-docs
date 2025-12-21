@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 14:55:00*
+*Updated on: 2025-12-21 15:15:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -109,6 +109,9 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **99%+ Backend Core Coverage**: Reached 99.4% backend coverage by implementing advanced test suites for Admin routers, edge-case service logic, and automated schema validation. **[Test Coverage]**
 - ✅ **Data Normalization**: Reconciled gift identifiers between `questions.json` and backend `SurveyService`. The backend now dynamically builds its scoring mapping from the questionnaire data, ensuring a unified source of truth. **[Data Integrity]**
 - ✅ **Database Index Optimization**: Added an explicit index to `surveys.user_id` to ensure sub-millisecond lookup performance for user survey history. **[Architecture]**
+- ✅ **Gift Trend Analysis**: Implemented an interactive multi-line chart ("Gift Growth Over Time") using Plotly.js, allowing users with multiple assessments to track their spiritual development. **[Logic & Features]**
+- ✅ **Comprehensive Admin Sorting**: Enabled multi-directional sorting for all columns in the Admin Dashboard (Logs & Users), providing complete oversight of system data. **[User Experience]**
+- ✅ **Automated Database ERD View**: Integrated a dynamic schema visualization tool into the Admin Dashboard using Mermaid.js, automatically synchronized with SQLAlchemy models. **[Maintainability]**
 ---
 </details>
 
@@ -141,12 +144,20 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Testing focuses on runtime unit logic but doesn't verify the final production bundle.
   - **Reason**: Build-time errors (e.g., missing dependencies or CSS conflicts) may pass unit tests but fail at deployment.
   - **Proposed**: Integrate `npm run build` as a mandatory validation step in the local testing workflow.
+- **Admin Dashboard Component Refactor**: **[Maintainability]**
+  - **Current**: `AdminDashboard.vue` is a large monolithic file (400+ lines).
+  - **Reason**: Mixed concerns make the component difficult to unit test and maintain as complexity increases.
+  - **Proposed**: Decompose the dashboard into specialized sub-components like `LogTable`, `UserTable`, and `AdminFilterBar`.
 
 ### **🎨 User Experience**
-- **Interactive Gift Growth Analytics**: **[Logic & Features]**
-  - **Current**: Users view static results for each assessment.
-  - **Reason**: Users need a way to see how their spiritual gifts develop over time.
-  - **Proposed**: Implement trend analysis (e.g., "Gift Growth Over Time") for users with multiple assessment results using interactive line charts.
+- **User Dashboard Personalization (Gravatar)**: **[User Experience]**
+  - **Current**: Users are identified solely by their email address in text form.
+  - **Reason**: A personalized visual identity (avatars) improves look-and-feel and makes the dashboard feel more premium.
+  - **Proposed**: Integrate **[Gravatar](https://en.gravatar.com/)** support to automatically display user avatars based on hashed email addresses.
+- **Server-Side Pagination for Logs**: **[Scalability]**
+  - **Current**: The Admin Panel fetches a fixed slice of 100 logs.
+  - **Reason**: Historical data becomes inaccessible as logs grow, and fetching full sets can impact database performance.
+  - **Proposed**: Implement offset-based pagination in the backend and a pager/infinite-scroll UI in the admin view.
 - **Offline Support**: **[Architecture]**
   - **Current**: The app requires an active internet connection to load.
   - **Reason**: Users may want to read their results or browse gift definitions in low-connectivity environments.
@@ -232,11 +243,7 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Every request for gifts or questions hits the database/file system.
   - **Reason**: These resources change infrequently and are ideal for performance optimization via caching.
   - **Proposed**: Implement caching for static/semi-static endpoints using **[Redis](https://redis.io/)** or in-memory cache.
-- **Database Schema Viz**: **[Maintainability]**
-  - **Current**: No automated database documentation.
-  - **Reason**: Understanding the data model becomes harder as more tables are added.
-  - **Proposed**: Generate and maintain an automated ERD (Entity Relationship Diagram) for the current schema.
-- **Database Session Context Audit**: **[Architecture]**
+- **CI/CD Pipeline**: **[DevOps]**
   - **Current**: Utility modules (e.g., logging) manually instantiate database sessions.
   - **Reason**: Inconsistent session lifecycle management can lead to orphaned connections or transaction deadlocks.
   - **Proposed**: Standardize all non-request database access using a context manager pattern (`with SessionLocal() as db:`) to guarantee cleanup.
@@ -247,7 +254,7 @@ This report provides a technical overview of the current implementation and offe
 ## 📊 Summary Assessment
 | Category | Rating | Priority |
 | :--- | :--- | :--- |
-| **Logic & Features** | 🟢 Mature | Low |
+| **Logic & Features** | 🟢 Advanced | Low |
 | **Architecture** | 🟢 Optimized | Low |
 | **Security** | 🟢 Hardened | Low |
 | **Maintainability** | 🟢 High | Low |
