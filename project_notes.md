@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 12:35:00*
+*Updated on: 2025-12-21 14:25:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -109,6 +109,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Service Layer Integration Testing**: Implemented `pytest` suite for `AuthService`, `SurveyService`, and `getJSONData`. **[Test Coverage]**
 - ✅ **Refined Auth Logic**: Improved email extraction and validation in the authentication flow, ensuring robust user identification.
 - ✅ **Tmux Power-User Environment**: Re-engineered `start_dev.sh` to use `tmux` with split-panes, providing side-by-side terminal monitoring of backend and frontend logs.
+- ✅ **Assessment Wizard Component Testing**: Achieved comprehensive Vitest coverage for the core `AssessmentWizard`, `QuestionCard`, and `WizardNavigation` components, verifying state transitions, auto-advance logic, and answer collection. **[Test Coverage]**
 ---
 </details>
 
@@ -116,10 +117,10 @@ This report provides a technical overview of the current implementation and offe
 <details>
 
 ### **🛠️ Engineering Excellence**
-- **Comprehensive Frontend Testing**: **[Test Coverage]**
-  - **Current**: Minimal test coverage (skeleton `App.spec.js`).
-  - **Reason**: Critical UI logic in `AssessmentWizard.vue` is currently unverified by automated tests.
-  - **Proposed**: Expand **Vitest** coverage for Vue components, focusing on state transitions and score calculations in the wizard.
+- **Mobile Responsiveness Testing**: **[Test Coverage]**
+  - **Current**: UI tests focus on logic and state.
+  - **Reason**: The complex "Flash" transitions and navigation layout need visual/functional verification across different viewport sizes.
+  - **Proposed**: Implement visual regression testing or mobile-simulated E2E tests using **[Playwright](https://playwright.dev/)** to ensure the mobile experience remains premium.
 - **100% Backend Coverage**: **[Test Coverage]**
   - **Current**: 96% coverage achieved.
   - **Reason**: Final 4% represents critical error handlers in `dev_auth.py`, `logging_setup.py`, and service layers that could fail silently.
@@ -140,6 +141,10 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: `surveys.user_id` is a foreign key but lacks an explicit index.
   - **Reason**: Query performance will degrade linearly as the number of users and surveys grows.
   - **Proposed**: Add an explicit database index to `surveys.user_id` to ensure sub-millisecond lookups.
+- **Automated Accessibility Regression Suite**: **[Maintainability]**
+  - **Current**: Accessibility is managed via manual review and a high-contrast mode toggle.
+  - **Reason**: Visual and functional changes can easily degrade compliance with ARIA standards without immediate feedback.
+  - **Proposed**: Integrate **[Axe-core](https://github.com/dequelabs/axe-core-npm)** into the Vitest or Playwright suite for automated accessibility testing on every CI run.
 - **Searchable Command Palette**: **[User Experience]**
   - **Current**: Navigation is becoming increasingly complex as features grow.
   - **Reason**: Power users often prefer keyboard-driven navigation to find specific tools or reports quickly.
@@ -218,10 +223,11 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Roles are assigned via seeding or manual database updates.
   - **Reason**: Promoting/demoting users should be a safe, UI-driven process for administrators.
   - **Proposed**: Add a "Edit Role" modal to the User Management tab in the Admin Dashboard.
-- **Internationalization (i18n)**: **[Logic & Features]**
-  - **Current**: The application is only available in English.
-  - **Reason**: To reach a global audience, the assessment and results should be available in multiple languages.
   - **Proposed**: Implement frontend i18n using **[vue-i18n](https://vue-i18n.intlify.dev/)** and translate core content into Spanish, French, etc.
+- **Email Delivery Observability**: **[Security]**
+  - **Current**: Magic links are dispatched via Neon Auth integration.
+  - **Reason**: Admins have no visibility into delivery failures (e.g., bounced emails, spam filtering), leading to silent user lockouts.
+  - **Proposed**: Implement a dedicated email service (e.g., **[Postmark](https://postmarkapp.com/)**) with webhook support to log delivery status back to the admin dashboard.
 - **Security Hardening**: **[Security]**
   - **Current**: Session cookies are HttpOnly but lack comprehensive CSRF protection.
   - **Reason**: Web applications using cookies are vulnerable to Cross-Site Request Forgery attacks.
