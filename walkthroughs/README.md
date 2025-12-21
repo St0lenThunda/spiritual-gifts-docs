@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-20 | [Pydantic V2 Migration](./2025-12-20-pydantic-v2-migration.md) | Migrated schemas to V2 and consolidated test suite |
 | 2025-12-20 | [UI Navigation Fixes](./2025-12-20-ui-navigation-fixes.md) | Resolved gift definition navigation, active states, and prop warnings |
 | 2025-12-20 | [Skeleton Loaders](./2025-12-20-skeleton-loaders.md) | Implemented animated loading states for Dashboard and Results |
 | 2025-12-20 | [Project Notes Update](./2025-12-20-project-notes-update.md) | Refreshed project notes with completed items and new suggestions |
