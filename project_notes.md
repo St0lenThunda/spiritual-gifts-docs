@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 01:10:00*
+*Updated on: 2025-12-21 01:37:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -96,6 +96,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Frontend Correlation**: Integrated `X-Request-ID` across stack to link browser actions to backend logs.
 - ✅ **Security Auditing**: Implemented automated logging of rate limit breaches and unauthorized access attempts.
 - ✅ **Error Logging**: Added unhandled exception capturing with full tracebacks and user identity in logs.
+- ✅ **Backend Scoring Logic**: Moved gift score calculation to `SurveyService` to ensure consistency across different clients.
 ---
 </details>
 
@@ -103,8 +104,6 @@ This report provides a technical overview of the current implementation and offe
 <details>
 
 ### **🛠️ Engineering Excellence**
-- **Backend Scoring Logic**:
-  - **Proposed**: Move gift score calculation from the frontend to the backend `SurveyService`. This ensures scoring consistency across different clients.
 - **TypeScript Migration**: 
   - **Proposed**: Transition the frontend to **TypeScript** for better type safety and self-documenting code.
 - **API Documentation Enrichment**:
@@ -115,9 +114,12 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Introduce API versioning (e.g., `/api/v1/`) to ensure backward compatibility as the system evolves. **[Architecture]**
 - **E2E Testing**:
   - **Proposed**: Implement End-to-End (E2E) testing with Playwright or Cypress to verify critical user flows (Login -> Assessment -> Results). **[Engineering Excellence]**
+- **Data Normalization**:
+  - **Proposed**: Reconcile the `gift` field in `questions.json` with the `GIFT_MAPPINGS` in the backend to ensure a single source of truth for gift identifiers. **[Engineering Excellence]**
 
 ### **🎨 User Experience**
-- ✅ **Frontend Logout UI**: Implemented logout buttons in both desktop navbar and mobile drawer, integrated with the `/auth/logout` endpoint.
+- **Dashboard Analytics**:
+  - **Proposed**: Implement trend analysis (e.g., "Gift Growth Over Time") for users with multiple assessment results. **[User Experience]**
 - **Offline Support**:
   - **Proposed**: Implement service worker for basic offline capabilities and cached assessment questions.
 
@@ -137,6 +139,8 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Create Dockerfile for consistent local and production environments.
 - **Security Hardening**:
   - **Proposed**: Implement CSRF protection for session-based cookies and audit third-party dependencies for vulnerabilities. **[Security]**
+- **API Caching**:
+  - **Proposed**: Implement caching for static/semi-static endpoints like `/questions` and `/gifts` to improve performance and reduce database load. **[Architecture]**
 
 ---
 </details>
