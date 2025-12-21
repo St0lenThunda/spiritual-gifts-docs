@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 11:30:00*
+*Updated on: 2025-12-21 12:35:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -80,6 +80,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Centralized Error Handling**: Unified API error management in `src/api/client.js` with consistent toast notifications.
 - ✅ **Frontend Logout UI**: Implemented session termination triggers in desktop and mobile navigation.
 - ✅ **Admin Dashboard**: Created a dedicated administrative interface for viewing system logs and user data.
+- ✅ **Interactive Sorting & Filtering**: Implemented server-side filtering and multi-column sorting in the Admin Dashboard for both logs and users.
 
 ### **💾 Data Integrity & Maintenance (Completed 2025-12-20)**
 - ✅ **Pydantic V2 Migration**: Migrated `schemas.py` and `config.py` to V2 syntax (`model_config`, `SettingsConfigDict`), eliminating deprecation warnings.
@@ -94,6 +95,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Standardized Error Handling**: Centralized exception management in `main.py`, removing redundant `try/except` blocks from `routers.py`.
 - ✅ **Stability Fixes**: Resolved Vue prop-type validation warning for the `StatsCard` component icon.
 - ✅ **Server Latency Mitigation**: Implemented `/health` endpoint and frontend retry logic with "Waking Server" UI to handle cold-starts.
+- ✅ **Space-Efficient Navigation**: Nested administrative links under a "DASHBOARD" dropdown using Headless UI for a cleaner interface.
 
 ### **📈 Monitoring & Observability (Completed 2025-12-21)**
 - ✅ **Structured Logging**: Implemented `structlog` with a Neon database sink, request middleware, and authenticated user context capturing.
@@ -106,6 +108,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Test Coverage Optimization (96%)**: Achieved 96% overall backend coverage. Implemented new test suites for `neon_auth`, `routers`, and `database` using `respx` mocking and `pytest-asyncio`. **[Test Coverage]**
 - ✅ **Service Layer Integration Testing**: Implemented `pytest` suite for `AuthService`, `SurveyService`, and `getJSONData`. **[Test Coverage]**
 - ✅ **Refined Auth Logic**: Improved email extraction and validation in the authentication flow, ensuring robust user identification.
+- ✅ **Tmux Power-User Environment**: Re-engineered `start_dev.sh` to use `tmux` with split-panes, providing side-by-side terminal monitoring of backend and frontend logs.
 ---
 </details>
 
@@ -137,6 +140,10 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: `surveys.user_id` is a foreign key but lacks an explicit index.
   - **Reason**: Query performance will degrade linearly as the number of users and surveys grows.
   - **Proposed**: Add an explicit database index to `surveys.user_id` to ensure sub-millisecond lookups.
+- **Searchable Command Palette**: **[User Experience]**
+  - **Current**: Navigation is becoming increasingly complex as features grow.
+  - **Reason**: Power users often prefer keyboard-driven navigation to find specific tools or reports quickly.
+  - **Proposed**: Implement a **[Command Palette](https://kbar.vercel.app/)** (`Ctrl+K`) for instant access to assessment, results, and administrative tools.
 
 ### **🎨 User Experience**
 - **Interactive Gift Growth Analytics**: **[Logic & Features]**
@@ -161,10 +168,10 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Implement a "Download PDF" feature that generates a professionally formatted summary of the user's gift profile.
 
 ### **📈 Analytics & Monitoring**
-- **Developer Audit UI**: **[Observability]**
-  - **Current**: Admin Dashboard provides basic log viewing.
-  - **Reason**: Debugging production issues requires advanced filtering and correlation.
-  - **Proposed**: Enhance the Admin Dashboard with full-text search and advanced date filtering for `log_entries`.
+- **Admin Log Export**: **[Analytics & Monitoring]**
+  - **Current**: Logs are viewable but cannot be exported.
+  - **Reason**: Complex analysis or archival often requires external tools like Excel or BI suites.
+  - **Proposed**: Implement a "Download CSV" feature in the Admin Dashboard that exports the currently filtered log view.
 - **Frontend Error Reporting**: **[Observability]**
   - **Current**: Errors are displayed as general "Request failed" messages.
   - **Reason**: Users cannot provide specific debugging information when they encounter an error.
@@ -177,6 +184,10 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Logs grow indefinitely in the database.
   - **Reason**: Unbounded table growth will eventually lead to storage exhaustion and performance degradation.
   - **Proposed**: Implement a retention policy and automatic rotation for database-backed logs.
+- **Admin: Real-time System Status**: **[Observability]**
+  - **Current**: Admin panel focused on historical logs and users.
+  - **Reason**: Admins need to know the current health of the database, API, and third-party integrations (Postmark, Neon) at a glance.
+  - **Proposed**: Add a "System Status" tab to the Admin Dashboard with live health check heartbeats for all dependencies.
 
 ### **🚀 DevOps & Architecture**
 - **CI/CD Pipeline**: **[DevOps]**
@@ -203,6 +214,10 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Security reviews are manual.
   - **Reason**: New vulnerabilities in dependencies can appear at any time.
   - **Proposed**: Implement automated security scanning for Python dependencies (`safety`) and JavaScript packages (`npm audit`) in CI/CD.
+- **Admin: User Role Management UI**: **[Security]**
+  - **Current**: Roles are assigned via seeding or manual database updates.
+  - **Reason**: Promoting/demoting users should be a safe, UI-driven process for administrators.
+  - **Proposed**: Add a "Edit Role" modal to the User Management tab in the Admin Dashboard.
 - **Internationalization (i18n)**: **[Logic & Features]**
   - **Current**: The application is only available in English.
   - **Reason**: To reach a global audience, the assessment and results should be available in multiple languages.
