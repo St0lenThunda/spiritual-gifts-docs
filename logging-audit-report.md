@@ -27,16 +27,17 @@ The following events are currently recorded in the `log_entries` database table.
 | `request_completed` | `INFO` | Telemetry for every API call. | `path`, `method`, `status_code`, `duration` |
 | `unhandled_exception` | `ERROR` | Application crash or 500 error. | `exception` (traceback), `path`, `method`, `user_id` |
 
+### Security & Access Control
+| Event | Level | Description | Captured Context |
+| :--- | :--- | :--- | :--- |
+| `rate_limit_exceeded` | `WARNING` | User/IP triggered a 429 breach. | `client_ip`, `path`, `limit` |
+| `unauthorized_access` | `WARNING` | Attempted access with invalid/missing token. | `reason`, `path`, `user_id` (if available) |
+
 ---
 
 ## 🚀 Suggested Enhancements
 
-### 1. Security & Rate Limiting (Audit Logs)
-- **`rate_limit_exceeded`**: Log when a user hits a 429. This helps identify bot activity or users struggling with login.
-- **`unauthorized_access`**: Explicitly log 401/403 errors when protected routes are accessed with invalid/missing cookies.
-- **`invalid_session_token`**: Log the *reason* for session failure (e.g., "token expired" vs "signature mismatch").
-
-### 2. Performance & Service Monitoring
+### 1. Performance & Service Monitoring
 - **`db_query_slow`**: Log any database operation that takes longer than a defined threshold (e.g., 500ms).
 - **`neon_api_latency`**: Track how long the external Neon Auth API takes to respond, as this affects login UX.
 - **`resource_load_failure`**: Log if system files like `questions.json` or `gifts.json` fail to parse at startup.

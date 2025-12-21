@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 02:00:00*
+*Updated on: 2025-12-21 02:05:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -12,7 +12,7 @@ This report provides a technical overview of the current implementation and offe
 - **Framework**: Vue 3 (Composition API)
 - **State Management**: Pinia
 - **Styling**: Tailwind CSS
-- **Visualization**: Chart.js (Radar & Bar charts)
+- **Visualization**: Plotly.js (Radar & Bar charts)
 - **Build Tool**: Vite
 
 ### **Backend**
@@ -91,6 +91,8 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Navigation UI Highlights**: Updated `App.vue` to correctly highlight "THE GIFTS" in the top bar when viewing gift definitions.
 - ✅ **Standardized Error Handling**: Centralized exception management in `main.py`, removing redundant `try/except` blocks from `routers.py`.
 - ✅ **Stability Fixes**: Resolved Vue prop-type validation warning for the `StatsCard` component icon.
+- ✅ **Server Latency Mitigation**: Implemented `/health` endpoint and frontend retry logic with "Waking Server" UI to handle cold-starts.
+
 ### **📈 Monitoring & Observability (Completed 2025-12-21)**
 - ✅ **Structured Logging**: Implemented `structlog` with a Neon database sink, request middleware, and authenticated user context capturing.
 - ✅ **Frontend Correlation**: Integrated `X-Request-ID` across stack to link browser actions to backend logs.
@@ -98,6 +100,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Error Logging**: Added unhandled exception capturing with full tracebacks and user identity in logs.
 - ✅ **Backend Scoring Logic**: Moved gift score calculation to `SurveyService` to ensure consistency across different clients.
 - ✅ **Enhanced API Documentation**: Added detailed descriptions and examples to Pydantic schemas for better Swagger/OpenAPI support.
+- ✅ **API Versioning**: Introduced `/api/v1/` prefix to backend routes and updated frontend client for future-proof compatibility.
 ---
 </details>
 
@@ -109,21 +112,24 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Transition the frontend to **TypeScript** for better type safety and self-documenting code.
 - **Test Coverage**:
   - **Proposed**: Add integration tests for the service layer and increase overall coverage.
-- **API Versioning**:
-  - **Proposed**: Introduce API versioning (e.g., `/api/v1/`) to ensure backward compatibility as the system evolves. **[Architecture]**
 - **E2E Testing**:
   - **Proposed**: Implement End-to-End (E2E) testing with Playwright or Cypress to verify critical user flows (Login -> Assessment -> Results). **[Engineering Excellence]**
 - **Data Normalization**:
   - **Proposed**: Reconcile the `gift` field in `questions.json` with the `GIFT_MAPPINGS` in the backend to ensure a single source of truth for gift identifiers. **[Engineering Excellence]**
+- **Database Index Optimization**:
+  - **Proposed**: Add an explicit database index to `surveys.user_id` to improve query performance as the dataset grows. **[Engineering Excellence]**
 
 ### **🎨 User Experience**
 - **Dashboard Analytics**:
   - **Proposed**: Implement trend analysis (e.g., "Gift Growth Over Time") for users with multiple assessment results. **[User Experience]**
 - **Offline Support**:
   - **Proposed**: Implement service worker for basic offline capabilities and cached assessment questions.
+- **Scripture Pre-fetching**:
+  - **Proposed**: Pre-fetch scripture content for the user's top 3 gifts on the results page to eliminate popover loading delays. **[User Experience]**
 
 ### **📈 Analytics & Monitoring**
-- ✅ **Structured Logging**: Implemented structured logging with `structlog`, capturing request context and user identity in a dedicated database table.
+- **Developer Audit UI**:
+  - **Proposed**: Create a protected administrative view to browse and filter `log_entries` directly from the dashboard. **[Observability]**
 - **Frontend Error Reporting**:
   - **Proposed**: Display `Request-ID` in the UI when an error occurs, allowing users to provide a reference code that developers can use to lookup exact logs.
 - **Database Health Monitoring**:
@@ -140,6 +146,10 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Implement CSRF protection for session-based cookies and audit third-party dependencies for vulnerabilities. **[Security]**
 - **API Caching**:
   - **Proposed**: Implement caching for static/semi-static endpoints like `/questions` and `/gifts` to improve performance and reduce database load. **[Architecture]**
+- **Role-Based Access Control (RBAC)**:
+  - **Proposed**: Introduce user roles (e.g., `user`, `admin`) to protect administrative endpoints and views. **[Architecture]**
+- **Admin Dashboard**:
+  - **Proposed**: Create a management interface for editing spiritual gift definitions, assessment questions, and viewing aggregate usage analytics. **[User Experience]**
 
 ---
 </details>
