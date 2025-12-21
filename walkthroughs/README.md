@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [Service Layer Testing](./2025-12-21-service-layer-testing.md) | Comprehensive integration tests for AuthService and SurveyService |
 | 2025-12-21 | [Documentation Refresh](./2025-12-21-documentation-refresh.md) | Corrected tech stack accuracies and added suggestions |
 | 2025-12-21 | [API Versioning](./2025-12-21-api-versioning.md) | Introduced `/api/v1` prefix for all business endpoints |
 | 2025-12-21 | [Enhanced API Documentation](./2025-12-21-enhanced-api-documentation.md) | Enriched Pydantic schemas with metadata and examples |
