@@ -6,14 +6,14 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [Project Notes & Logging Refinement](./2025-12-21-project-notes-logging-refinement.md) | Added correlation, security auditing, and roadmap refresh |
+| 2025-12-21 | [Structured Logging & Observability](./2025-12-21-structured-logging.md) | Implemented `structlog` with database storage and user context tracking |
 | 2025-12-20 | [Logout Endpoint Implementation](./2025-12-20-logout-endpoint.md) | Added server-side session termination via HttpOnly cookie deletion |
 | 2025-12-20 | [Pydantic V2 Migration](./2025-12-20-pydantic-v2-migration.md) | Migrated schemas to V2 and consolidated test suite |
 | 2025-12-20 | [UI Navigation Fixes](./2025-12-20-ui-navigation-fixes.md) | Resolved gift definition navigation, active states, and prop warnings |
 | 2025-12-20 | [Skeleton Loaders](./2025-12-20-skeleton-loaders.md) | Implemented animated loading states for Dashboard and Results |
-| 2025-12-21 | [Structured Logging & Observability](./2025-12-21-structured-logging.md) | Implemented `structlog` with database storage and user context tracking |
 | 2025-12-20 | [Frontend Logout UI Implementation](./2025-12-20-frontend-logout-ui.md) | Added logout buttons to desktop and mobile navigation with backend integration |
 | 2025-12-20 | [Project Notes Refresh](./2025-12-20-project-notes-logout-update.md) | Integrated logout endpoint and added backend scoring/observability suggestions |
-| 2025-12-20 | [Logout Endpoint Implementation](./2025-12-20-logout-endpoint.md) | Added server-side session termination via HttpOnly cookie deletion |
 | 2025-12-20 | [Data Integrity Setup](./2025-12-20-data-integrity-setup.md) | Alembic migrations and .env.example documentation |
 | 2025-12-20 | [Service Layer Refactoring](./2025-12-20-service-layer-refactoring.md) | Extracted business logic into AuthService and SurveyService |
 | 2025-12-20 | [Security Hardening](./2025-12-20-security-hardening.md) | HttpOnly JWT cookies, rate limiting, production gate, input validation |

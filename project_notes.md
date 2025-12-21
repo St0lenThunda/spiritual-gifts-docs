@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 00:00:00*
+*Updated on: 2025-12-21 00:50:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -20,8 +20,8 @@ This report provides a technical overview of the current implementation and offe
 - **Database**: PostgreSQL (hosted via Neon)
 - **ORM**: SQLAlchemy + Alembic migrations
 - **Authentication**: Custom Magic Link (Passwordless) + JWT Session Management (HttpOnly Cookies)
-- **Observability**: Structured Logging (`structlog`) with database storage of events and errors.
-- **Rate Limiting**: slowapi (3 requests/10min on auth endpoints)
+- **Observability**: Structured Logging (`structlog`) with database storage of events and errors. Correlated with frontend via `X-Request-ID`.
+- **Rate Limiting**: slowapi (3 requests/10min on auth endpoints) with audit logging of breaches.
 
 ---
 </details>
@@ -92,6 +92,8 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Stability Fixes**: Resolved Vue prop-type validation warning for the `StatsCard` component icon.
 ### **📈 Monitoring & Observability (Completed 2025-12-21)**
 - ✅ **Structured Logging**: Implemented `structlog` with a Neon database sink, request middleware, and authenticated user context capturing.
+- ✅ **Frontend Correlation**: Integrated `X-Request-ID` across stack to link browser actions to backend logs.
+- ✅ **Security Auditing**: Implemented automated logging of rate limit breaches and unauthorized access attempts.
 - ✅ **Error Logging**: Added unhandled exception capturing with full tracebacks and user identity in logs.
 ---
 </details>
@@ -106,8 +108,8 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Transition the frontend to **TypeScript** for better type safety and self-documenting code.
 - **API Documentation Enrichment**:
   - **Proposed**: Add detailed descriptions and examples to Pydantic schemas to enhance the auto-generated Swagger/OpenAPI documentation.
-- **Test Coverage**:
-  - **Proposed**: Add integration tests for the service layer and increase overall coverage.
+- **Standardized Error Handling**:
+  - **Proposed**: Refactor `routers.py` to remove redundant `try/except` blocks for database operations, relying on a global exception handler in `main.py` for consistent 500 mapping and logging.
 
 ### **🎨 User Experience**
 - ✅ **Frontend Logout UI**: Implemented logout buttons in both desktop navbar and mobile drawer, integrated with the `/auth/logout` endpoint.
@@ -116,8 +118,10 @@ This report provides a technical overview of the current implementation and offe
 
 ### **📈 Analytics & Monitoring**
 - ✅ **Structured Logging**: Implemented structured logging with `structlog`, capturing request context and user identity in a dedicated database table.
-- **Error Tracking**:
-  - **Proposed**: Integrate Sentry or similar for backend error monitoring.
+- **Frontend Error Reporting**:
+  - **Proposed**: Display `Request-ID` in the UI when an error occurs, allowing users to provide a reference code that developers can use to lookup exact logs.
+- **Database Health Monitoring**:
+  - **Proposed**: Extend `/health` endpoint to verify database connectivity status and log connectivity failures.
 
 ### **🚀 DevOps**
 - **CI/CD Pipeline**:

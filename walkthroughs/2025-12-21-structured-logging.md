@@ -10,6 +10,8 @@ Implemented structured logging using `structlog` to improve backend observabilit
 - **Database Log Sink**: A new `log_entries` table in PostgreSQL captures every significant backend event.
 - **Request Middleware**: Automatically logs every request's completion with its duration and status code.
 - **Enhanced Logout Tracking**: Logout events now capture the `user_id` and `user_email` by identifying the user before clearing the session cookie.
+- **Frontend Correlation (X-Request-ID)**: Added support for `X-Request-ID` headers. Every frontend request now includes a unique UUID that is captured and persisted in the backend database logs, allowing for seamless end-to-end debugging.
+- **Security & Rate Limit Auditing**: Enhanced logging for security events. The system now records `unauthorized_access` attempts (with reasons like `missing_token` or `invalid_token`) and `rate_limit_exceeded` events (capturing the client's IP and the specific limit breached).
 - **Dev-Login Monitoring**: Use of the development login bypass is now explicitly logged with the target user's email.
 - **Exception Tracking**: Unhandled exceptions are caught, logged with full tracebacks, and associated with the current user.
 - **Logging Audit**: A comprehensive report of all current events and future suggestions is available in [logging-audit-report.md](../logging-audit-report.md).
