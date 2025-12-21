@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [Enhanced API Documentation](./2025-12-21-enhanced-api-documentation.md) | Enriched Pydantic schemas with metadata and examples |
 | 2025-12-21 | [Backend Scoring Migration](./2025-12-21-backend-scoring-migration.md) | Moved gift score calculation to backend SurveyService |
 | 2025-12-21 | [Strategic Roadmap Refresh](./2025-12-21-strategic-roadmap-refresh.md) | Refreshed project notes with new suggestions and pruned duplicates |
 | 2025-12-21 | [Project Notes & Logging Refinement](./2025-12-21-project-notes-logging-refinement.md) | Added correlation, security auditing, and roadmap refresh |
