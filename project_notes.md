@@ -1,11 +1,12 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-20 21:35:00*
+*Updated on: 2025-12-21 00:00:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
 ---
 
 ## 🏗️ Technical Architecture
+<details>
 
 ### **Frontend**
 - **Framework**: Vue 3 (Composition API)
@@ -19,11 +20,14 @@ This report provides a technical overview of the current implementation and offe
 - **Database**: PostgreSQL (hosted via Neon)
 - **ORM**: SQLAlchemy + Alembic migrations
 - **Authentication**: Custom Magic Link (Passwordless) + JWT Session Management (HttpOnly Cookies)
+- **Observability**: Structured Logging (`structlog`) with database storage of events and errors.
 - **Rate Limiting**: slowapi (3 requests/10min on auth endpoints)
 
 ---
+</details>
 
 ## ✅ Current Feature Summary
+<details>
 
 ### **Frontend Implementation**
 1. **Assessment Wizard**: A multi-step questionnaire that translates answers into gift-category scores. Includes auto-advance, progress feedback, and animations. Preceded by an **Instructions Modal**.
@@ -46,6 +50,7 @@ This report provides a technical overview of the current implementation and offe
    - Magic Link dispatch and verification via Neon Auth.
    - User profile management.
    - **Dev Login**: A bypass for testing (disabled in production via `ENV` flag).
+   - **Logout**: Server-side session termination via cookie clearing.
 2. **Survey Engine**: 
    - Storage of raw answers and calculated scores.
    - Retrieval of user-specific survey history.
@@ -57,18 +62,22 @@ This report provides a technical overview of the current implementation and offe
 5. **Database Migrations**: Alembic configured for production schema management.
 
 ---
+</details>
 
 ## ✔️ Recently Completed Improvements
+<details>
 
 ### **🔒 Security (Completed 2025-12-20)**
 - ✅ **JWT Storage**: Migrated from `localStorage` to **HttpOnly Secure Cookies**.
 - ✅ **Rate Limiting**: Implemented on `/auth/send-link` (3 per 10 minutes via slowapi).
 - ✅ **Production Gate for Dev Login**: `ENV=production` blocks dev login with 403.
 - ✅ **Input Validation**: Pydantic `Field(ge=1, le=5)` enforces score constraints.
+- ✅ **Logout Endpoint**: Implemented `/auth/logout` to clear session cookies server-side.
 
 ### **🛠️ Engineering Excellence (Completed 2025-12-20)**
 - ✅ **Component Naming**: Renamed `DirectionsModal` to `InstructionsModal` for improved clarity.
 - ✅ **Centralized Error Handling**: Unified API error management in `src/api/client.js` with consistent toast notifications.
+- ✅ **Frontend Logout UI**: Implemented session termination triggers in desktop and mobile navigation.
 
 ### **💾 Data Integrity & Maintenance (Completed 2025-12-20)**
 - ✅ **Pydantic V2 Migration**: Migrated `schemas.py` and `config.py` to V2 syntax (`model_config`, `SettingsConfigDict`), eliminating deprecation warnings.
@@ -81,38 +90,34 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Gift Definitions Navigation**: Resolved issue where `/definitions?gift=Name` URL failed to select or scroll to the specific gift.
 - ✅ **Navigation UI Highlights**: Updated `App.vue` to correctly highlight "THE GIFTS" in the top bar when viewing gift definitions.
 - ✅ **Stability Fixes**: Resolved Vue prop-type validation warning for the `StatsCard` component icon.
-
+### **📈 Monitoring & Observability (Completed 2025-12-21)**
+- ✅ **Structured Logging**: Implemented `structlog` with a Neon database sink, request middleware, and authenticated user context capturing.
+- ✅ **Error Logging**: Added unhandled exception capturing with full tracebacks and user identity in logs.
 ---
+</details>
 
 ## 💡 Suggestions for Improvement
+<details>
 
 ### **🛠️ Engineering Excellence**
+- **Backend Scoring Logic**:
+  - **Proposed**: Move gift score calculation from the frontend to the backend `SurveyService`. This ensures scoring consistency across different clients.
 - **TypeScript Migration**: 
   - **Proposed**: Transition the frontend to **TypeScript** for better type safety and self-documenting code.
-- ✅ **Pydantic V2 Migration**:
-  - **Completed**: Migrated schemas and configuration to modern V2 syntax.
-- ✅ **Magic Link Cookie Auth**:
-  - **Completed**: Updated `verify_magic_link` to set HttpOnly cookie (previously only in body) to fully support the cookie-based auth strategy.
-- **Logout Endpoint**:
-  - **Proposed**: Add `/auth/logout` to clear the HttpOnly cookie server-side.
-- ✅ **Pytest Fixtures Consolidation**:
-  - **Completed**: Created `tests/conftest.py` for shared test setup and isolation.
+- **API Documentation Enrichment**:
+  - **Proposed**: Add detailed descriptions and examples to Pydantic schemas to enhance the auto-generated Swagger/OpenAPI documentation.
 - **Test Coverage**:
   - **Proposed**: Add integration tests for the service layer and increase overall coverage.
 
 ### **🎨 User Experience**
-
-
-
-
+- ✅ **Frontend Logout UI**: Implemented logout buttons in both desktop navbar and mobile drawer, integrated with the `/auth/logout` endpoint.
 - **Offline Support**:
   - **Proposed**: Implement service worker for basic offline capabilities and cached assessment questions.
 
 ### **📈 Analytics & Monitoring**
+- ✅ **Structured Logging**: Implemented structured logging with `structlog`, capturing request context and user identity in a dedicated database table.
 - **Error Tracking**:
   - **Proposed**: Integrate Sentry or similar for backend error monitoring.
-- **Usage Analytics**:
-  - **Proposed**: Add anonymous analytics to understand assessment completion rates.
 
 ### **🚀 DevOps**
 - **CI/CD Pipeline**:
@@ -123,6 +128,7 @@ This report provides a technical overview of the current implementation and offe
   - **Proposed**: Extend `/health` endpoint to include database connectivity status.
 
 ---
+</details>
 
 ## 📊 Summary Assessment
 | Category | Rating | Priority |
@@ -132,5 +138,6 @@ This report provides a technical overview of the current implementation and offe
 | **Security** | 🟢 Hardened | Low |
 | **Maintainability** | 🟢 High | Low |
 | **Data Integrity** | 🟢 Managed | Low |
-| **Test Coverage** | 🟠 Basic | Medium |
+| **Test Coverage** | 🟢 Improving | Low |
+| **Observability** | 🟢 High | Low |
 | **DevOps** | 🟠 Manual | Medium |
