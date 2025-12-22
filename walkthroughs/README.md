@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-22 | [Gravatar Integration](./2025-12-22-gravatar-integration.md) | User avatars from email hashes with fallback handling |
 | 2025-12-22 | [Test and Lint Fixes](./2025-12-22-test-warning-fixes.md) | Fixed pytest warnings, 20 ESLint errors, added `npm run validate` workflow |
 | 2025-12-22 | [Mobile E2E Testing](./2025-12-22-mobile-e2e-testing.md) | Playwright mobile device emulation and visual regression testing |
 | 2025-12-22 | [Playwright E2E Testing in WSL](./2025-12-22-playwright-wsl-setup.md) | Configured Playwright for WSL with VcXsrv, fixed browser deps, improved test auth |
