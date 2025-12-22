@@ -171,6 +171,7 @@ TOTAL                              523      6    99%
 - ✅ **Server-Side Survey Pagination**: Implemented limit/offset pagination for the `/user/surveys` endpoint and standardized frontend pagination controls (moved to `common/`). **[Scalability]**
 - ✅ **Pinia Store Testing**: Implemented isolated unit tests for `user.js` and `survey.js` stores covering auth flow, state persistence, and pagination logic. **[Test Coverage]**
 - ✅ **Admin Component Testing**: Added unit tests for `LogTable.vue`, `UserTable.vue`, and `AdminFilterBar.vue` ensuring stability of the administrative interface. **[Test Coverage]**
+- ✅ **Assessment State Persistence**: Implemented local storage saving/restoring in `TakeAssessment.vue` to preventing data loss on page refresh. **[User Experience]**
 ---
 </details>
 
@@ -214,10 +215,6 @@ TOTAL                              523      6    99%
   - **Current**: Scriptures are fetched only when the popover is opened.
   - **Reason**: Network latency can cause a noticeable delay in showing the scripture content.
   - **Proposed**: Pre-fetch scripture content for the user's top 3 gifts on the results page to ensure instant display.
-- **Assessment State Persistence**: **[Logic & Features]**
-  - **Current**: A page refresh during an assessment causes complete data loss.
-  - **Reason**: Losing progress in a 40+ question assessment is a frustrating user experience.
-  - **Proposed**: Persist partial assessment progress in local storage to safely resume after accidental refresh.
 - **PDF Results Export**: **[Logic & Features]**
   - **Current**: Results are only viewable within the web dashboard.
   - **Reason**: Users often want to print or share their results with mentors or ministry leaders.
