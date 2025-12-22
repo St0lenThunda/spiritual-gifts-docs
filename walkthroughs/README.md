@@ -6,10 +6,12 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
-| 2025-12-22 | [Site Launch Fixes](./2025-12-22-site-launch-fixes.md) | Fixed broken venv paths, port conflicts, and start_dev.sh robustness |
-| 2025-12-22 | [PDF Download Feature](./2025-12-22-pdf-download-feature.md) | Professional PDF export of gift profile with scores and definitions |
-| 2025-12-22 | [Gravatar Integration](./2025-12-22-gravatar-integration.md) | User avatars from email hashes with fallback handling |
-| 2025-12-22 | [Test and Lint Fixes](./2025-12-22-test-warning-fixes.md) | Fixed pytest warnings, 20 ESLint errors, added `npm run validate` workflow |
+| 2025-12-22 | [Test and Lint Fixes](./2025-12-22-test-warning-fixes.md) | Fixed pytest warnings, ESLint errors, and Vitest config |
+| 2025-12-22 | [Site Launch Fixes](./2025-12-22-site-launch-fixes.md) | Resolved venv path issues and improved start_dev.sh reliability |
+| 2025-12-22 | [PDF Download Feature](./2025-12-22-pdf-download-feature.md) | Professionally formatted PDF summaries for gift profiles |
+| 2025-12-22 | [Gravatar Integration](./2025-12-22-gravatar-integration.md) | Added user avatars based on hashed email addresses |
+| 2025-12-22 | [Redis Integration](./2025-12-22-redis-integration.md) | Shared rate limiting and static endpoint caching |
+| 2025-12-22 | [Database Access Standardization](./2025-12-22-db-access-standardization.md) | Unified context manager pattern for SQLAlchemy sessions |
 | 2025-12-22 | [Mobile E2E Testing](./2025-12-22-mobile-e2e-testing.md) | Playwright mobile device emulation and visual regression testing |
 | 2025-12-22 | [Playwright E2E Testing in WSL](./2025-12-22-playwright-wsl-setup.md) | Configured Playwright for WSL with VcXsrv, fixed browser deps, improved test auth |
 | 2025-12-21 | [System Status Monitoring](./2025-12-21-system-health-monitoring.md) | Enhanced `/health` endpoint and added Admin Dashboard status tab |
