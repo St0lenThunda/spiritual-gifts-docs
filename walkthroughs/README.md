@@ -14,6 +14,7 @@ This directory contains documentation of key implementation milestones and fixes
 | 2025-12-21 | [Data Normalization](./2025-12-21-data-normalization.md) | Reconciled gift mappings and naming between frontend and backend |
 | 2025-12-21 | [Strategic Backend Test Coverage](./2025-12-21-strategic-backend-test-coverage.md) | Achieved 99.4% backend coverage by targeting edge cases and admin routes |
 | 2025-12-21 | [Expanded Frontend Testing](./2025-12-21-expanded-frontend-testing.md) | 14 new Vitest unit tests for Assessment Wizard and its subcomponents |
+| 2025-12-21 | [Request-ID Correlation](./2025-12-21-request-id-error-handling.md) | Full-stack implementation of Request-ID for error tracking and log correlation. |
 | 2025-12-21 | [Admin Panel Enhancements](./2025-12-21-admin-panel-enhancements.md) | RBAC fixes, advanced filtering/sorting, and nested navigation refactor |
 | 2025-12-21 | [Test Coverage Optimization](./2025-12-21-test-coverage-optimization.md) | Achieved 96% backend coverage across routers, services, and database |
 | 2025-12-21 | [Service Layer Testing](./2025-12-21-service-layer-testing.md) | Comprehensive integration tests for AuthService and SurveyService |

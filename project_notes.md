@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 20:30:00*
+*Updated on: 2025-12-21 21:10:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -172,6 +172,7 @@ TOTAL                              523      6    99%
 - ✅ **Pinia Store Testing**: Implemented isolated unit tests for `user.js` and `survey.js` stores covering auth flow, state persistence, and pagination logic. **[Test Coverage]**
 - ✅ **Admin Component Testing**: Added unit tests for `LogTable.vue`, `UserTable.vue`, and `AdminFilterBar.vue` ensuring stability of the administrative interface. **[Test Coverage]**
 - ✅ **Assessment State Persistence**: Implemented local storage saving/restoring in `TakeAssessment.vue` to preventing data loss on page refresh. **[User Experience]**
+- ✅ **Request-ID for Error Tracking**: Implemented full-stack `X-Request-ID` propagation. Frontend now generates IDs and displays them in error toasts, while backend logs all events with the correlated ID. **[Observability]**
 ---
 </details>
 
@@ -225,10 +226,7 @@ TOTAL                              523      6    99%
   - **Current**: Logs are viewable but cannot be exported.
   - **Reason**: Complex analysis or archival often requires external tools like Excel or BI suites.
   - **Proposed**: Implement a "Download CSV" feature in the Admin Dashboard that exports the currently filtered log view.
-- **Frontend Error Reporting**: **[Observability]**
-  - **Current**: Errors are displayed as general "Request failed" messages.
-  - **Reason**: Users cannot provide specific debugging information when they encounter an error.
-  - **Proposed**: Display `Request-ID` in the UI when an error occurs, allowing users to provide a reference code for support.
+
 - **Database Health Monitoring**: **[Observability]**
   - **Current**: `/health` endpoint only checks the API status.
   - **Reason**: The API might be up while the database connection is broken, leading to false positives in health checks.
@@ -288,6 +286,10 @@ TOTAL                              523      6    99%
   - **Current**: Every request for gifts or questions hits the database/file system.
   - **Reason**: These resources change infrequently and are ideal for performance optimization via caching.
   - **Proposed**: Implement caching for static/semi-static endpoints using **[Redis](https://redis.io/)** or in-memory cache.
+- **Distributed Rate Limiting**: **[Scalability]**
+  - **Current**: Rate limiting (slowapi) uses in-memory storage.
+  - **Reason**: In-memory limits do not scale across multiple worker processes or server instances (e.g., if we scale horizontally on Render).
+  - **Proposed**: Configure `slowapi` to use a **Redis** backend for shared state across all instances.
 - **CI/CD Pipeline**: **[DevOps]**
   - **Current**: Utility modules (e.g., logging) manually instantiate database sessions.
   - **Reason**: Inconsistent session lifecycle management can lead to orphaned connections or transaction deadlocks.
