@@ -108,9 +108,9 @@ TOTAL                              523      6    99%
 ### **Frontend Verification**
 `npm run test:unit`
 ```text
- Test Files  7 passed (7) 
-      Tests  23 passed (23)
-   Duration  14.39s
+ Test Files  12 passed (12) 
+      Tests  51 passed (51)
+   Duration  26.20s
 ```
 </details>
 
@@ -169,6 +169,8 @@ TOTAL                              523      6    99%
 - ✅ **Frontend Unit Tests**: Implemented dedicated test suites for `InstructionsModal.vue` and `ScripturePopover.vue` using Vitest and Vue Test Utils. **[Test Coverage]**
 - ✅ **Schema Validation**: Hardened `TokenVerifyRequest` schema to reject empty tokens, aligning implementation with test expectations. **[Data Integrity]**
 - ✅ **Server-Side Survey Pagination**: Implemented limit/offset pagination for the `/user/surveys` endpoint and standardized frontend pagination controls (moved to `common/`). **[Scalability]**
+- ✅ **Pinia Store Testing**: Implemented isolated unit tests for `user.js` and `survey.js` stores covering auth flow, state persistence, and pagination logic. **[Test Coverage]**
+- ✅ **Admin Component Testing**: Added unit tests for `LogTable.vue`, `UserTable.vue`, and `AdminFilterBar.vue` ensuring stability of the administrative interface. **[Test Coverage]**
 ---
 </details>
 
@@ -184,14 +186,6 @@ TOTAL                              523      6    99%
   - **Current**: Frontend is written in standard JavaScript.
   - **Reason**: Lack of type safety can lead to runtime errors as the codebase grows.
   - **Proposed**: Transition the frontend to **[TypeScript](https://www.typescriptlang.org/)** for better developer experience and self-documenting code.
-- **E2E Testing**: **[Test Coverage]**
-  - **Current**: No automated end-to-end tests.
-  - **Reason**: Manual testing of the full user flow (Login -> Assessment -> Results) is time-consuming and prone to human error.
-  - **Proposed**: Implement E2E testing with **[Playwright](https://playwright.dev/)** to verify critical user paths.
-- **Pinia Store Testing**: **[Test Coverage]**
-  - **Current**: Store logic is tested implicitly through component tests.
-  - **Reason**: Complex state management for surveys and authentication requires dedicated verification to ensure reliability.
-  - **Proposed**: Implement isolated unit tests for `survey.js`, `user.js`, and `auth.js` stores using `setActivePinia`.
 - **E2E Testing with Playwright**: **[Reliability]**
 - **Automated Accessibility Regression Suite**: **[Maintainability]**
   - **Current**: Accessibility is managed via manual review and a high-contrast mode toggle.
@@ -206,9 +200,6 @@ TOTAL                              523      6    99%
   - **Reason**: Build-time errors (e.g., missing dependencies or CSS conflicts) may pass unit tests but fail at deployment.
   - **Proposed**: Integrate `npm run build` as a mandatory validation step in the local testing workflow.
 - **Unit Test Admin Components**: **[Test Coverage]**
-  - **Current**: Admin components (`LogTable`, `UserTable`, `AdminFilterBar`) are newly created and lack dedicated unit tests.
-  - **Reason**: Ensuring these components render correctly and emit expected events is crucial for admin stability.
-  - **Proposed**: Add Vitest unit tests for each new admin component.
 
 ### **🎨 User Experience**
 - **User Dashboard Personalization (Gravatar)**: **[User Experience]**
