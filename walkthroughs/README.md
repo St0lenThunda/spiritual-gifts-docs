@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [Server-Side Pagination](./2025-12-21-server-side-pagination.md) | Implemented limit/offset pagination for User Surveys and standardized frontend controls |
 | 2025-12-21 | [Automated ERD View](./2025-12-21-automated-erd-view.md) | Live database schema visualization in the Admin Panel |
 | 2025-12-21 | [Admin Sorting & Filtering](./2025-12-21-admin-sorting-filtering.md) | Multi-column interactive sorting for Logs and Users |
 | 2025-12-21 | [Gift Trend Analysis](./2025-12-21-gift-trend-analysis.md) | Interactive multi-line growth tracking for spiritual gifts |

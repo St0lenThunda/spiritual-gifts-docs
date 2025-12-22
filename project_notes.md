@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 18:40:00*
+*Updated on: 2025-12-21 20:30:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -32,17 +32,22 @@ This report provides a technical overview of the current implementation and offe
 ### **Frontend Implementation**
 1. **Assessment Wizard**: A multi-step questionnaire that translates answers into gift-category scores. Includes auto-advance, progress feedback, and animations. Preceded by an **Instructions Modal**.
 2. **Dynamic Results**: Interactive Radar and Bar charts that visualize assessment outcomes.
-3. **User Dashboard**: History of past assessments and quick access to results.
-4. **Scripture Integration**: Interactive popovers displaying Bible verses in multiple versions (NIV, KJV, etc.).
-5. **Accessibility Layer**: 
+3. **User Dashboard**: History of past assessments with server-side pagination and quick access to results.
+4. **Admin Dashboard**: Comprehensive interface for system oversight, featuring:
+   - **Log Explorer**: Server-side filtering, sorting, and pagination of system events.
+   - **User Management**: Role-based user listing and oversight.
+   - **Schema Visualization**: Interactive Entity Relationship Diagram (ERD) using Mermaid.js with zoom/pan controls.
+5. **Enhanced Analytics**: "Gift Growth Over Time" multi-line chart for tracking spiritual development across multiple assessments.
+6. **Scripture Integration**: Interactive popovers displaying Bible verses in multiple versions (NIV, KJV, etc.).
+7. **Accessibility Layer**: 
    - High-contrast mode toggle.
    - Atkinson Hyperlegible font for improved readability.
-6. **Modular Component Architecture**: 
-   - `AssessmentWizard.vue` decomposed into `ProgressHeader`, `QuestionCard`, and `WizardNavigation`.
-   - `Results.vue` decomposed into `ResultsHeader` and `ChartViewToggle`.
-7. **Optimized Transitions**: 
+8. **Modular Component Architecture**: 
+   - Decomposed complex views (`AssessmentWizard`, `Results`, `AdminDashboard`) into specialized sub-components.
+9. **Optimized Transitions**: 
    - High-performance "Flash" cross-fade (150ms) implemented with `mode="out-in"` for cleaner navigation.
-8. **Standardized Documentation**: 
+10. **Server Awareness**: "Waking Server" UI indicator to manage cold-start latency perceptions.
+11. **Standardized Documentation**: 
    - A formal workflow for logging implementation details in `docs/walkthroughs/`.
 
 ### **Backend Implementation**
@@ -58,10 +63,55 @@ This report provides a technical overview of the current implementation and offe
 3. **Core Data APIs**: Serves standardized spiritual gift definitions and questionnaire content from static JSON sources.
 4. **Service Layer Architecture**:
    - `AuthService` - User creation, login tracking
-   - `SurveyService` - Survey CRUD operations
-5. **Database Migrations**: Alembic configured for production schema management.
+   - `SurveyService` - Survey CRUD operations and scoring logic.
+5. **Advanced Observability**:
+   - **Structured Logging**: JSON-structured event logging with Neon database persistence.
+   - **Traceability**: Full-stack request correlation via `X-Request-ID`.
+   - **Security Auditing**: Automated logging of rate limit breaches and unauthorized access.
+6. **Administrative API**:
+   - Protected endpoints (`/api/v1/admin/*`) for system internals.
+   - **Dynamic Schema Generation**: Automated extraction of SQLAlchemy models into Mermaid ERD syntax.
+7. **API Versioning**: All routes namespaced under `/api/v1/` for future compatibility.
+8. **Health Monitoring**: Dedicated `/health` endpoint for uptime checks.
+9. **Database Migrations**: Alembic configured for production schema management.
 
 ---
+</details>
+
+## 🧪 Test Coverage & Verification
+<details>
+
+### **Backend Coverage (99%)**
+`pytest --cov=app tests`
+```text
+Name                             Stmts   Miss  Cover
+----------------------------------------------------
+app/config.py                       11      0   100%
+app/database.py                     12      0   100%
+app/dev_auth.py                     22      1    95%
+app/limiter.py                       3      0   100%
+app/logging_setup.py                34      0   100%
+app/main.py                         54      1    98%
+app/models.py                       36      0   100%
+app/neon_auth.py                    82      0   100%
+app/routers/__init__.py             71      3    96%
+app/routers/admin.py                72      1    99%
+app/schemas.py                      38      0   100%
+app/services/__init__.py             4      0   100%
+app/services/auth_service.py        18      0   100%
+app/services/getJSONData.py         17      0   100%
+app/services/survey_service.py      49      0   100%
+----------------------------------------------------
+TOTAL                              523      6    99%
+```
+
+### **Frontend Verification**
+`npm run test:unit`
+```text
+ Test Files  7 passed (7) 
+      Tests  23 passed (23)
+   Duration  14.39s
+```
 </details>
 
 ## ✔️ Recently Completed Improvements
@@ -118,6 +168,7 @@ This report provides a technical overview of the current implementation and offe
 - ✅ **Backend Test Fixes**: Resolved failures in `test_admin.py` (pagination adaptation) and `test_services.py` (data alignment) to restore passing status. **[Test Coverage]**
 - ✅ **Frontend Unit Tests**: Implemented dedicated test suites for `InstructionsModal.vue` and `ScripturePopover.vue` using Vitest and Vue Test Utils. **[Test Coverage]**
 - ✅ **Schema Validation**: Hardened `TokenVerifyRequest` schema to reject empty tokens, aligning implementation with test expectations. **[Data Integrity]**
+- ✅ **Server-Side Survey Pagination**: Implemented limit/offset pagination for the `/user/surveys` endpoint and standardized frontend pagination controls (moved to `common/`). **[Scalability]**
 ---
 </details>
 
@@ -137,6 +188,10 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: No automated end-to-end tests.
   - **Reason**: Manual testing of the full user flow (Login -> Assessment -> Results) is time-consuming and prone to human error.
   - **Proposed**: Implement E2E testing with **[Playwright](https://playwright.dev/)** to verify critical user paths.
+- **Pinia Store Testing**: **[Test Coverage]**
+  - **Current**: Store logic is tested implicitly through component tests.
+  - **Reason**: Complex state management for surveys and authentication requires dedicated verification to ensure reliability.
+  - **Proposed**: Implement isolated unit tests for `survey.js`, `user.js`, and `auth.js` stores using `setActivePinia`.
 - **E2E Testing with Playwright**: **[Reliability]**
 - **Automated Accessibility Regression Suite**: **[Maintainability]**
   - **Current**: Accessibility is managed via manual review and a high-contrast mode toggle.
@@ -160,10 +215,6 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: Users are identified solely by their email address in text form.
   - **Reason**: A personalized visual identity (avatars) improves look-and-feel and makes the dashboard feel more premium.
   - **Proposed**: Integrate **[Gravatar](https://en.gravatar.com/)** support to automatically display user avatars based on hashed email addresses.
-- **Server-Side Pagination for Logs**: **[Scalability]**
-  - **Current**: The Admin Panel fetches a fixed slice of 100 logs.
-  - **Reason**: Historical data becomes inaccessible as logs grow, and fetching full sets can impact database performance.
-  - **Proposed**: Implement offset-based pagination in the backend and a pager/infinite-scroll UI in the admin view.
 - **Offline Support**: **[Architecture]**
   - **Current**: The app requires an active internet connection to load.
   - **Reason**: Users may want to read their results or browse gift definitions in low-connectivity environments.
@@ -257,10 +308,6 @@ This report provides a technical overview of the current implementation and offe
   - **Current**: `mermaid` is imported statically in `SchemaERD.vue`.
   - **Reason**: Mermaid is a large library (~1MB). Loading it upfront increases the initial bundle size for the Admin chunk, even if the user never views the schema tab.
   - **Proposed**: Use dynamic imports (`await import('mermaid')`) to load the library only when the Schema Explorer is activated.
-- **User Survey Pagination**: **[Scalability]**
-  - **Current**: `GET /user/surveys` returns the full history of a user's assessments.
-  - **Reason**: While currently manageable, loyal users with many retakes will eventually degrade dashboard performance.
-  - **Proposed**: Implement limit/offset pagination for the survey history endpoint.
 - **PII Redaction in Logs**: **[Privacy]**
   - **Current**: Full user emails are included in structured access logs.
   - **Reason**: Storing unnecessary PII (Personal Identifiable Information) in logs increases privacy risk and compliance burden (GDPR/CCPA).
