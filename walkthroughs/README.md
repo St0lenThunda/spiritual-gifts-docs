@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-22 | [PDF Download Feature](./2025-12-22-pdf-download-feature.md) | Professional PDF export of gift profile with scores and definitions |
 | 2025-12-22 | [Gravatar Integration](./2025-12-22-gravatar-integration.md) | User avatars from email hashes with fallback handling |
 | 2025-12-22 | [Test and Lint Fixes](./2025-12-22-test-warning-fixes.md) | Fixed pytest warnings, 20 ESLint errors, added `npm run validate` workflow |
 | 2025-12-22 | [Mobile E2E Testing](./2025-12-22-mobile-e2e-testing.md) | Playwright mobile device emulation and visual regression testing |
