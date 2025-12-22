@@ -6,6 +6,9 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-21 | [System Status Monitoring](./2025-12-21-system-health-monitoring.md) | Enhanced `/health` endpoint and added Admin Dashboard status tab |
+| 2025-12-21 | [PII Redaction in Logs](./2025-12-21-pii-redaction.md) | Implemented masking processor for structlog to redacted email addresses |
+| 2025-12-21 | [Dynamic Mermaid.js Loading](./2025-12-21-dynamic-mermaid-loading.md) | Optimized bundle size by dynamically importing mermaid.js only when needed |
 | 2025-12-21 | [Server-Side Pagination](./2025-12-21-server-side-pagination.md) | Implemented limit/offset pagination for User Surveys and standardized frontend controls |
 | 2025-12-21 | [Automated ERD View](./2025-12-21-automated-erd-view.md) | Live database schema visualization in the Admin Panel |
 | 2025-12-21 | [Admin Sorting & Filtering](./2025-12-21-admin-sorting-filtering.md) | Multi-column interactive sorting for Logs and Users |

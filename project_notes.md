@@ -173,6 +173,9 @@ TOTAL                              523      6    99%
 - ✅ **Admin Component Testing**: Added unit tests for `LogTable.vue`, `UserTable.vue`, and `AdminFilterBar.vue` ensuring stability of the administrative interface. **[Test Coverage]**
 - ✅ **Assessment State Persistence**: Implemented local storage saving/restoring in `TakeAssessment.vue` to preventing data loss on page refresh. **[User Experience]**
 - ✅ **Request-ID for Error Tracking**: Implemented full-stack `X-Request-ID` propagation. Frontend now generates IDs and displays them in error toasts, while backend logs all events with the correlated ID. **[Observability]**
+- ✅ **Dynamic Mermaid.js Loading**: Optimized bundle size by converting `mermaid` import to a dynamic `await import()` call, reducing initial load time for the Admin Dashboard. **[Performance]**
+- ✅ **PII Redaction in Logs**: Implemented a `structlog` processor to mask user emails (e.g. `j***@example.com`) in all log outputs. **[Privacy]**
+- ✅ **System Status Monitoring**: Enhanced `/health` endpoint to verify DB connectivity and added a real-time status tab to the Admin Dashboard. **[Observability]**
 ---
 </details>
 
@@ -227,18 +230,12 @@ TOTAL                              523      6    99%
   - **Reason**: Complex analysis or archival often requires external tools like Excel or BI suites.
   - **Proposed**: Implement a "Download CSV" feature in the Admin Dashboard that exports the currently filtered log view.
 
-- **Database Health Monitoring**: **[Observability]**
-  - **Current**: `/health` endpoint only checks the API status.
-  - **Reason**: The API might be up while the database connection is broken, leading to false positives in health checks.
-  - **Proposed**: Extend `/health` endpoint to verify database connectivity status and log connectivity failures.
+
 - **Log Retention & Rotation**: **[Observability]**
   - **Current**: Logs grow indefinitely in the database.
   - **Reason**: Unbounded table growth will eventually lead to storage exhaustion and performance degradation.
   - **Proposed**: Implement a retention policy and automatic rotation for database-backed logs.
-- **Admin: Real-time System Status**: **[Observability]**
-  - **Current**: Admin panel focused on historical logs and users.
-  - **Reason**: Admins need to know the current health of the database, API, and third-party integrations (Postmark, Neon) at a glance.
-  - **Proposed**: Add a "System Status" tab to the Admin Dashboard with live health check heartbeats for all dependencies.
+
 
 ### **🚀 DevOps & Architecture**
 - **CI/CD Pipeline**: **[DevOps]**
@@ -294,14 +291,7 @@ TOTAL                              523      6    99%
   - **Current**: Utility modules (e.g., logging) manually instantiate database sessions.
   - **Reason**: Inconsistent session lifecycle management can lead to orphaned connections or transaction deadlocks.
   - **Proposed**: Standardize all non-request database access using a context manager pattern (`with SessionLocal() as db:`) to guarantee cleanup.
-- **Dynamic Mermaid.js Loading**: **[Performance]**
-  - **Current**: `mermaid` is imported statically in `SchemaERD.vue`.
-  - **Reason**: Mermaid is a large library (~1MB). Loading it upfront increases the initial bundle size for the Admin chunk, even if the user never views the schema tab.
-  - **Proposed**: Use dynamic imports (`await import('mermaid')`) to load the library only when the Schema Explorer is activated.
-- **PII Redaction in Logs**: **[Privacy]**
-  - **Current**: Full user emails are included in structured access logs.
-  - **Reason**: Storing unnecessary PII (Personal Identifiable Information) in logs increases privacy risk and compliance burden (GDPR/CCPA).
-  - **Proposed**: Mask identifying fields in logs (e.g. `j***@example.com`) or log only the immutable `user_id`.
+
 
 ---
 </details>
