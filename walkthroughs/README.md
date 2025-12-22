@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-22 | [Mobile E2E Testing](./2025-12-22-mobile-e2e-testing.md) | Playwright mobile device emulation and visual regression testing |
+| 2025-12-22 | [Playwright E2E Testing in WSL](./2025-12-22-playwright-wsl-setup.md) | Configured Playwright for WSL with VcXsrv, fixed browser deps, improved test auth |
 | 2025-12-21 | [System Status Monitoring](./2025-12-21-system-health-monitoring.md) | Enhanced `/health` endpoint and added Admin Dashboard status tab |
 | 2025-12-21 | [PII Redaction in Logs](./2025-12-21-pii-redaction.md) | Implemented masking processor for structlog to redacted email addresses |
 | 2025-12-21 | [Dynamic Mermaid.js Loading](./2025-12-21-dynamic-mermaid-loading.md) | Optimized bundle size by dynamically importing mermaid.js only when needed |
