@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-21 21:10:00*
+*Updated on: 2025-12-21 22:30:00*
 
 This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
 
@@ -81,28 +81,28 @@ This report provides a technical overview of the current implementation and offe
 ## 🧪 Test Coverage & Verification
 <details>
 
-### **Backend Coverage (99%)**
+### **Backend Coverage (100%)**
 `pytest --cov=app tests`
 ```text
 Name                             Stmts   Miss  Cover
 ----------------------------------------------------
 app/config.py                       11      0   100%
 app/database.py                     12      0   100%
-app/dev_auth.py                     22      1    95%
+app/dev_auth.py                     17      0   100%
 app/limiter.py                       3      0   100%
-app/logging_setup.py                34      0   100%
-app/main.py                         54      1    98%
+app/logging_setup.py                51      0   100%
+app/main.py                         85      0   100%
 app/models.py                       36      0   100%
 app/neon_auth.py                    82      0   100%
-app/routers/__init__.py             71      3    96%
-app/routers/admin.py                72      1    99%
+app/routers/__init__.py             71      0   100%
+app/routers/admin.py                72      0   100%
 app/schemas.py                      38      0   100%
 app/services/__init__.py             4      0   100%
 app/services/auth_service.py        18      0   100%
 app/services/getJSONData.py         17      0   100%
 app/services/survey_service.py      49      0   100%
 ----------------------------------------------------
-TOTAL                              523      6    99%
+TOTAL                              566      0   100%
 ```
 
 ### **Frontend Verification**
@@ -175,7 +175,7 @@ TOTAL                              523      6    99%
 - ✅ **Request-ID for Error Tracking**: Implemented full-stack `X-Request-ID` propagation. Frontend now generates IDs and displays them in error toasts, while backend logs all events with the correlated ID. **[Observability]**
 - ✅ **Dynamic Mermaid.js Loading**: Optimized bundle size by converting `mermaid` import to a dynamic `await import()` call, reducing initial load time for the Admin Dashboard. **[Performance]**
 - ✅ **PII Redaction in Logs**: Implemented a `structlog` processor to mask user emails (e.g. `j***@example.com`) in all log outputs. **[Privacy]**
-- ✅ **System Status Monitoring**: Enhanced `/health` endpoint to verify DB connectivity and added a real-time status tab to the Admin Dashboard. **[Observability]**
+- ✅ **System Status Monitoring**: Enhanced `/health` endpoint with database and Netlify proxy checks; added real-time status dashboard with environment-aware error reporting. **[Observability]**
 ---
 </details>
 
@@ -235,6 +235,10 @@ TOTAL                              523      6    99%
   - **Current**: Logs grow indefinitely in the database.
   - **Reason**: Unbounded table growth will eventually lead to storage exhaustion and performance degradation.
   - **Proposed**: Implement a retention policy and automatic rotation for database-backed logs.
+- **Health Check Alerting**: **[Observability]**
+  - **Current**: Admins must actively look at the dashboard to see outages.
+  - **Reason**: Critical failures might go unnoticed for hours.
+  - **Proposed**: Integrate a push notification system (e.g., via Postmark or Slack webhook) that triggers when the `/health` endpoint reports a degraded state for > 5 minutes.
 
 
 ### **🚀 DevOps & Architecture**
@@ -287,7 +291,7 @@ TOTAL                              523      6    99%
   - **Current**: Rate limiting (slowapi) uses in-memory storage.
   - **Reason**: In-memory limits do not scale across multiple worker processes or server instances (e.g., if we scale horizontally on Render).
   - **Proposed**: Configure `slowapi` to use a **Redis** backend for shared state across all instances.
-- **CI/CD Pipeline**: **[DevOps]**
+- **Database Session Management**: **[Architecture]**
   - **Current**: Utility modules (e.g., logging) manually instantiate database sessions.
   - **Reason**: Inconsistent session lifecycle management can lead to orphaned connections or transaction deadlocks.
   - **Proposed**: Standardize all non-request database access using a context manager pattern (`with SessionLocal() as db:`) to guarantee cleanup.
@@ -304,6 +308,6 @@ TOTAL                              523      6    99%
 | **Security** | 🟢 Hardened | Low |
 | **Maintainability** | 🟢 High | Low |
 | **Data Integrity** | 🟢 Unified | Low |
-| **Test Coverage** | 🟢 Mature (99%) | Low |
+| **Test Coverage** | 🟢 Mature (100%) | Low |
 | **Observability** | 🟢 Mature | Low |
 | **DevOps** | 🟠 Manual | Medium |

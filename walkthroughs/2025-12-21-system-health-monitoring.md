@@ -32,14 +32,15 @@ def health():
 
 ### Frontend
 - **`components/admin/SystemStatus.vue`**: New component polling `/health` every 30s. Visualizes latency, uptime, and service status.
+  - **Render Platform**: Status inferred from API health (Operational if accessible, Outage if not).
+  - **Netlify Frontend**: Backend proxies a check to `https://sga-v1.netlify.app/` using `httpx`.
+    - This bypasses CORS and allows the dashboard to display the exact HTTP status code (e.g., `200`, `404`).
 - **`pages/AdminDashboard.vue`**: Integrated the new status view as a tab.
 
 ## Verification
 ### Automated Tests
-- `pytest tests/test_health_monitor.py`: Verifies that:
-    - Successful DB connection returns 200 OK.
-    - Failed DB connection returns 503 Service Unavailable.
-    - System gracefully handles logging failures during outage simulations.
+- `pytest tests/test_health_monitor.py`: Verifies database connectivity checks.
+- `pytest tests/test_proxy_health.py`: Verifies the Netlify proxy logic, ensuring that external failures default to a "Degraded" but operational API state.
 
 ### Manual Verification
 - Validated the "System Status" tab in the Admin Dashboard.
