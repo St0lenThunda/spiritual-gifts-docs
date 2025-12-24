@@ -1,352 +1,128 @@
-# Spiritual Gifts Assessment: Code Analysis & Summary
-*Updated on: 2025-12-24 13:48:00*
+# Spiritual Gifts Assessment: Project Notes
+*Version: 1.0.0 | Updated: 2025-12-24*
 
-This report provides a technical overview of the current implementation and offers strategic suggestions for enhancing the system's security, maintainability, and user experience.
+A production-ready spiritual gifts assessment platform for churches and ministries.
+
+---
+
+## 🏗️ Technical Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | Vue 3, Pinia, Tailwind CSS, D3.js |
+| **Backend** | FastAPI, SQLAlchemy, PostgreSQL (Neon) |
+| **Auth** | Magic Link + JWT (HttpOnly Cookies) |
+| **Security** | CSRF protection, Security Headers, RBAC |
+| **Caching** | Redis (with in-memory fallback) |
+| **Testing** | Pytest (99%), Vitest, Playwright |
 
 ---
 
-## 🏗️ Technical Architecture
-<details>
+## ✅ Current Features
 
-### **Frontend**
-- **Framework**: Vue 3 (Composition API)
-- **State Management**: Pinia
-- **Styling**: Tailwind CSS
-- **Visualization**: **D3.js** (Bespoke Radar, Bar & Trend charts with synth-glow aesthetics)
-- **Build Tool**: Vite
+### Frontend
+- 📝 **Assessment Wizard** - 40-question multi-step flow with progress tracking
+- 📊 **D3.js Visualizations** - Radar, bar, and trend charts with synth-glow styling
+- 📄 **Themed PDF Export** - Digital (dark) and Print (light) modes
+- 👑 **Admin Dashboard** - Logs, Users, Schema ERD viewer
+- ♿ **Accessibility** - WCAG 2.1 AA, high-contrast mode, keyboard navigation
 
-### **Backend**
-- **Framework**: FastAPI (Python)
-- **Database**: PostgreSQL (hosted via Neon)
-- **ORM**: SQLAlchemy + Alembic migrations
-- **Authentication**: Custom Magic Link (Passwordless) + JWT Session Management (HttpOnly Cookies) + **Role-Based Access Control (RBAC)**.
-- **Observability**: Structured Logging (`structlog`) with database storage of events and errors. Correlated with frontend via `X-Request-ID`. Centralized global exception handling. **Admin Dashboard** for log oversight. Real-time **System Status** dashboard with health monitoring.
-- **Rate Limiting**: slowapi (3 requests/10min on auth endpoints) with audit logging of breaches. **Redis-backed distributed storage** ensures consistency across worker instances. **Resilient fallback** to in-memory storage if Redis is disabled or unreachable.
-- **Security**: CSRF protection via **fastapi-csrf-protect** with synchronizer tokens for all state-changing requests. Best-practice **Security Headers Middleware** (HSTS, CSP, X-Frame-Options, X-Content-Type-Options).
-- **Caching**: **Redis** integrated for API response caching of static resources (gifts, questions, scriptures). **SafeJsonCoder** ensures parity between Redis and in-memory fallbacks.
-- **External Tools**: **jsPDF** used for client-side generation of professional gift profiles. Supports **Interactive Theme Selection** (Digital Synth vs. Print-Friendly Light).
+### Backend
+- 🔐 **Secure Auth** - Magic links, CSRF tokens, rate limiting
+- 📈 **Survey Engine** - Answer storage, scoring, history
+- 📋 **Admin APIs** - Paginated logs/users, schema introspection
+- 🏢 **Multi-Tenancy** - Organization model, member management
 
 ---
-</details>
 
-## ✅ Current Feature Summary
-<details>
+## 🧪 Test Coverage
 
-### **Frontend Implementation**
-1. **Assessment Wizard**: A multi-step questionnaire that translates answers into gift-category scores. Includes auto-advance, progress feedback, and animations. Preceded by an **Instructions Modal**.
-2. **Dynamic Results**: Bespoke **D3.js Radar and Bar charts** that visualize assessment outcomes with high-performance SVG rendering and synth-glow effects.
-3. **User Dashboard**: History of past assessments with server-side pagination and quick access to results.
-4. **Admin Dashboard**: Comprehensive interface for system oversight, featuring:
-   - **Log Explorer**: Server-side filtering, sorting, and pagination of system events.
-   - **User Management**: Role-based user listing and oversight.
-   - **Schema Visualization**: Interactive Entity Relationship Diagram (ERD) using Mermaid.js with zoom/pan controls.
-5. **Enhanced Analytics**: **D3.js "Gift Growth Over Time"** multi-series line chart for tracking spiritual development.
-6. **Scripture Integration**: Interactive popovers displaying Bible verses in multiple versions (NIV, KJV, etc.).
-7. **Accessibility Layer**: 
-   - High-contrast mode toggle.
-   - Atkinson Hyperlegible font for improved readability.
-   - **Accessible UI Components**: ARIA roles and keyboard navigation for assessment options.
-   - **Automated WCAG Audits**: Axe-core integrated into Playwright E2E suite.
-8. **Themed PDF Export**: Professional profile generation with **Digital (Synth Dark)** and **Print (Light)** mode selection to optimize physical printing. **Split-button UI** for intuitive theme selection.
-9. **Optimized Transitions**: 
-   - High-performance "Flash" cross-fade (150ms) implemented with `mode="out-in"` for cleaner navigation.
-10. **Server Awareness**: "Waking Server" UI indicator to manage cold-start latency perceptions.
-11. **Standardized Documentation**: 
-   - A formal workflow for logging implementation details in `docs/walkthroughs/`.
-
-### **Backend Implementation**
-1. **Identity Management**:
-   - Magic Link dispatch and verification via Neon Auth.
-   - User profile management.
-   - **Dev Login**: A bypass for testing (disabled in production via `ENV` flag).
-   - **Logout**: Server-side session termination via cookie clearing.
-2. **Survey Engine**: 
-   - Storage of raw answers and calculated scores.
-   - Retrieval of user-specific survey history.
-   - **Input Validation**: Pydantic `Field` constraints enforce score ranges (1-5).
-3. **Core Data APIs**: Serves standardized spiritual gift definitions and questionnaire content from static JSON sources.
-4. **Service Layer Architecture**:
-   - `AuthService` - User creation, login tracking
-   - `SurveyService` - Survey CRUD operations and scoring logic.
-5. **Advanced Observability**:
-   - **Structured Logging**: JSON-structured event logging with Neon database persistence.
-   - **Traceability**: Full-stack request correlation via `X-Request-ID`.
-   - **Security Auditing**: Automated logging of rate limit breaches and unauthorized access.
-6. **Administrative API**:
-   - Protected endpoints (`/api/v1/admin/*`) for system internals.
-   - **Dynamic Schema Generation**: Automated extraction of SQLAlchemy models into Mermaid ERD syntax.
-7. **API Versioning**: All routes namespaced under `/api/v1/` for future compatibility.
-8. **Health Monitoring**: High-precision `/health` endpoint checking DB connectivity and external proxy status.
-9. **Distributed State**: **Redis** integration for shared rate limiting and high-performance caching. **Robust resilience logic** ensures graceful fallback to memory storage for all Redis-dependent features.
-10. **Database Access Standardization**: Unified context manager pattern (`with SessionLocal() as db:`) for all non-request interactions.
-11. **Database Migrations**: Alembic configured for production schema management.
+| Suite | Status |
+|-------|--------|
+| Backend (pytest) | 99% (116 tests) ✅ |
+| Frontend Unit (Vitest) | 122 tests (19 files) |
+| E2E (Playwright) | 36 passed, 8 skipped |
 
 ---
-</details>
 
-## 🧪 Test Coverage & Verification
-<details>
+## 🚀 SaaS Roadmap
 
-### **Backend Coverage (100%)** 🆕
-`pytest --cov=app tests`
-```text
-Name                             Stmts   Miss  Cover
-----------------------------------------------------
-app/config.py                       14      0   100%
-app/database.py                     10      0   100%
-app/dev_auth.py                     17      0   100%
-app/limiter.py                      19      0   100%
-app/logging_setup.py                52      0   100%
-app/main.py                        138      0   100%
-app/models.py                       36      0   100%
-app/neon_auth.py                    82      0   100%
-app/routers/__init__.py             98      0   100%
-app/routers/admin.py                72      0   100%
-app/schemas.py                      38      0   100%
-app/services/__init__.py             4      0   100%
-app/services/auth_service.py        18      0   100%
-app/services/getJSONData.py         17      0   100%
-app/services/survey_service.py      49      0   100%
-----------------------------------------------------
-TOTAL                              664      0   100%
-----------------------------------------------------
-84 passed, 0 failures (100% coverage)
-```
-> [!TIP]
-> Achieved 100% coverage by mocking Redis initialization paths, fixing CSRF token endpoint signature, and ensuring proper test isolation for rate limiter state.
+### Phase 1: Foundation ✅
+- [x] Organization model & API
+- [x] Tenant isolation (org_id filtering)
+- [x] Frontend organization store & settings page
 
-### **Frontend Unit Tests**
-`npm run test:unit`
-```text
- Test Files  16 passed (16) 
-      Tests  83 passed (83)
-   Duration  11.41s
-```
+### Phase 2: Monetization (Next)
+- [ ] Stripe integration
+- [ ] Pricing tiers (Free, Starter, Growth, Enterprise)
+- [ ] Subscription management UI
 
-### **E2E Tests (Playwright)**
-`npm run test:e2e:save` (Chromium only, cached to `e2e-results.json`)
-```text
-  20 passed, 3 failures (87% pass rate)
-```
-> [!NOTE]
-> 3 E2E test failures are due to browser timing issues during mobile viewport tests. All core user flows pass.
-</details>
+### Phase 3: Onboarding
+- [ ] Organization setup wizard
+- [ ] Member invitation emails
+- [ ] Marketing landing page
 
-## ✔️ Recently Completed Improvements
-<details open>
-
-### **🎨 Visualization & PDF (Completed 2025-12-24)**
-- ✅ **D3.js Migration**: Replaced Plotly.js with custom **D3.js** charts. achieved bespoke synthwave styling (neon glow, CSS filters) and 40% reduction in visualization weight. **[UX/Performance]**
-- ✅ **Themed PDF Export**: Implemented Digital (Synth) and Print (Light) PDF modes. Added robust page-break logic and 40-point score scaling. **[Logic & Features]**
-- ✅ **Interactive Theme Selector**: Added UI toggle to the results page for user PDF preference selection. **[UX]**
-- ✅ **Split-Button UI Refactor**: Redesigned the PDF download button as a premium split-button with dynamic labels (`Download Digital`/`Download Print`). **[UX]** 🆕
-
-### **🔄 Backend Stability & Parity (Completed 2025-12-24)**
-- ✅ **Redis Consistency**: Fixed `SafeJsonCoder` in backend routers to ensure uniform byte/string handling between Redis and in-memory caches. **[Architecture]**
-- ✅ **Dependency Alignment**: Resolved Redis/FastAPI-Cache version conflicts by pinning `redis<5.0.0`. **[Maintainability]**
-
-### **🧪 Quality Assurance (Completed 2025-12-24)**
-- ✅ **E2E Reliability**: Reached 100% Playwright pass rate by hardening locators and resolving race conditions in the assessment flow. **[Test Coverage]**
-- ✅ **ARIA Standards**: Implemented accessibility roles and keyboard support for assessment options. **[Usability]**
-
-### **🔒 Security (Completed 2025-12-20)**
-- ✅ **JWT Storage**: Migrated from `localStorage` to **HttpOnly Secure Cookies**.
-- ✅ **Rate Limiting**: Implemented on `/auth/send-link` (3 per 10 minutes via slowapi).
-- ✅ **Production Gate for Dev Login**: `ENV=production` blocks dev login with 403.
-- ✅ **Input Validation**: Pydantic `Field(ge=1, le=5)` enforces score constraints.
-- ✅ **Logout Endpoint**: Implemented `/auth/logout` to clear session cookies server-side.
-- ✅ **Role-Based Access Control (RBAC)**: Integrated `admin` and `user` roles to protect administrative endpoints and views.
-
-### **🛠️ Engineering Excellence (Completed 2025-12-20)**
-- ✅ **Component Naming**: Renamed `DirectionsModal` to `InstructionsModal` for improved clarity.
-- ✅ **Centralized Error Handling**: Unified API error management in `src/api/client.js` with consistent toast notifications.
-- ✅ **Frontend Logout UI**: Implemented session termination triggers in desktop and mobile navigation.
-- ✅ **Admin Dashboard**: Created a dedicated administrative interface for viewing system logs and user data.
-- ✅ **Interactive Sorting & Filtering**: Implemented server-side filtering and multi-column sorting in the Admin Dashboard for both logs and users.
-- ✅ **Automated Accessibility Testing**: Integrated **Axe-core** into Playwright suite. Resolved high-impact WCAG violations (focusable scrollable regions) and established a baseline for inclusive design. **[Quality Assurance]**
-
-### **🔒 Security Hardening (Completed 2025-12-24)** 🆕
-- ✅ **CSRF Protection**: Implemented synchronizer token pattern using **fastapi-csrf-protect**. All POST routes (`/auth/send-link`, `/auth/verify`, `/auth/logout`, `/survey/submit`) now require and validate CSRF tokens. **[Security]**
-- ✅ **Security Headers Middleware**: Added `SecurityHeadersMiddleware` to set HSTS, CSP, X-Frame-Options, X-Content-Type-Options, and Referrer-Policy on all responses. **[Security]**
-- ✅ **Frontend CSRF Integration**: Updated Axios client to automatically fetch CSRF tokens and include them in all state-changing requests via `X-CSRF-Token` header. **[Security]**
-- ✅ **CSRF Endpoint Fix**: Corrected `set_csrf_cookie` signature to use `generate_csrf_tokens()` pattern. **[Security]**
-- ✅ **100% Backend Test Coverage**: Achieved complete test coverage by mocking Redis paths, fixing test isolation, and adding comprehensive CSRF/security tests. **[Test Coverage]** 🆕
-
-### **💾 Data Integrity & Maintenance (Completed 2025-12-20)**
-- ✅ **Pydantic V2 Migration**: Migrated `schemas.py` and `config.py` to V2 syntax (`model_config`, `SettingsConfigDict`), eliminating deprecation warnings.
-- ✅ **Test Suite Consolidation**: Created `tests/conftest.py` with shared fixtures, improving test isolation and reducing boilerplate.
-- ✅ **Database Migrations (Alembic)**: Set up with `alembic/` directory, configured `env.py`, conditional `create_all()` for dev.
-- ✅ **Environment Documentation**: Created `.env.example` documenting all required keys.
-
-### **🎨 User Experience & Navigation (Completed 2025-12-20)**
-- ✅ **Loading States**: Implemented skeleton loaders for `Dashboard` and `Results` pages.
-- ✅ **Gift Definitions Navigation**: Resolved issue where `/definitions?gift=Name` URL failed to select or scroll to the specific gift.
-- ✅ **Navigation UI Highlights**: Updated `App.vue` to correctly highlight "THE GIFTS" in the top bar when viewing gift definitions.
-- ✅ **Standardized Error Handling**: Centralized exception management in `main.py`, removing redundant `try/except` blocks from `routers.py`.
-- ✅ **Stability Fixes**: Resolved Vue prop-type validation warning for the `StatsCard` component icon.
-- ✅ **Server Latency Mitigation**: Implemented `/health` endpoint and frontend retry logic with "Waking Server" UI to handle cold-starts.
-- ✅ **Space-Efficient Navigation**: Nested administrative links under a "DASHBOARD" dropdown using Headless UI for a cleaner interface.
-
-### **📈 Monitoring & Observability (Completed 2025-12-21)**
-- ✅ **Structured Logging**: Implemented `structlog` with a Neon database sink, request middleware, and authenticated user context capturing.
-- ✅ **Frontend Correlation**: Integrated `X-Request-ID` across stack to link browser actions to backend logs.
-- ✅ **Security Auditing**: Implemented automated logging of rate limit breaches and unauthorized access attempts.
-- ✅ **Error Logging**: Added unhandled exception capturing with full tracebacks and user identity in logs.
-- ✅ **Backend Scoring Logic**: Moved gift score calculation to `SurveyService` to ensure consistency across different clients.
-- ✅ **Enhanced API Documentation**: Added detailed descriptions and examples to Pydantic schemas for better Swagger/OpenAPI support.
-- ✅ **API Versioning**: Introduced `/api/v1/` prefix to backend routes and updated frontend client.
-- ✅ **Assessment Wizard Component Testing**: Achieved comprehensive Vitest coverage for the core `AssessmentWizard`, `QuestionCard`, and `WizardNavigation` components.
-- ✅ **99%+ Backend Core Coverage**: Reached 99.4% backend coverage by implementing advanced test suites for Admin routers, edge-case service logic, and automated schema validation. **[Test Coverage]**
-- ✅ **Data Normalization**: Reconciled gift identifiers between `questions.json` and backend `SurveyService`. The backend now dynamically builds its scoring mapping from the questionnaire data, ensuring a unified source of truth. **[Data Integrity]**
-- ✅ **Database Index Optimization**: Added an explicit index to `surveys.user_id` to ensure sub-millisecond lookup performance for user survey history. **[Architecture]**
-- ✅ **Gift Trend Analysis**: Implemented an interactive multi-line chart ("Gift Growth Over Time") using Plotly.js, allowing users with multiple assessments to track their spiritual development. **[Logic & Features]**
-- ✅ **Comprehensive Admin Sorting**: Enabled multi-directional sorting for all columns in the Admin Dashboard (Logs & Users), providing complete oversight of system data. **[User Experience]**
-- ✅ **Automated Database ERD View**: Integrated a dynamic schema visualization tool into the Admin Dashboard using Mermaid.js, automatically synchronized with SQLAlchemy models. **[Maintainability]**
-- ✅ **Admin Dashboard Component Refactor**: Decomposed `AdminDashboard.vue` into specialized sub-components (`LogTable`, `UserTable`, `AdminFilterBar`), improving readability and maintainability. **[Maintainability]**
-- ✅ **Interactive ERD Viewer**: Added Zoom and Pan capabilities (0.1x-5x) to the Database Schema viewer, enabling deep exploration of complex table relationships. **[User Experience]**
-- ✅ **Admin Pagination & Filtering**: Implemented server-side pagination (Log/User) and UI toggles for robust data management. **[Scalability]**
-- ✅ **Backend Test Fixes**: Resolved failures in `test_admin.py` (pagination adaptation) and `test_services.py` (data alignment) to restore passing status. **[Test Coverage]**
-- ✅ **Frontend Unit Tests**: Implemented dedicated test suites for `InstructionsModal.vue` and `ScripturePopover.vue` using Vitest and Vue Test Utils. **[Test Coverage]**
-- ✅ **Schema Validation**: Hardened `TokenVerifyRequest` schema to reject empty tokens, aligning implementation with test expectations. **[Data Integrity]**
-- ✅ **Server-Side Survey Pagination**: Implemented limit/offset pagination for the `/user/surveys` endpoint and standardized frontend pagination controls (moved to `common/`). **[Scalability]**
-- ✅ **Pinia Store Testing**: Implemented isolated unit tests for `user.js` and `survey.js` stores covering auth flow, state persistence, and pagination logic. **[Test Coverage]**
-- ✅ **Admin Component Testing**: Added unit tests for `LogTable.vue`, `UserTable.vue`, and `AdminFilterBar.vue` ensuring stability of the administrative interface. **[Test Coverage]**
-- ✅ **Assessment State Persistence**: Implemented local storage saving/restoring in `TakeAssessment.vue` to preventing data loss on page refresh. **[User Experience]**
-- ✅ **Request-ID for Error Tracking**: Implemented full-stack `X-Request-ID` propagation. Frontend now generates IDs and displays them in error toasts, while backend logs all events with the correlated ID. **[Observability]**
-- ✅ **Dynamic Mermaid.js Loading**: Optimized bundle size by converting `mermaid` import to a dynamic `await import()` call, reducing initial load time for the Admin Dashboard. **[Performance]**
-- ✅ **PII Redaction in Logs**: Implemented a `structlog` processor to mask user emails (e.g. `j***@example.com`) in all log outputs. **[Privacy]**
-- ✅ **System Status Monitoring**: Enhanced `/health` endpoint with database and Netlify proxy checks; added real-time status dashboard with environment-aware error reporting. **[Observability]**
-
-### **🧪 Testing Infrastructure (Completed 2025-12-22)**
-- ✅ **Playwright E2E Testing**: Configured Playwright for end-to-end testing with WSL/VcXsrv support. Added headless, headed, debug, and UI test scripts. **[Test Coverage]**
-- ✅ **E2E Results Caching**: Added `test:e2e:save` script that outputs JSON results to `e2e-results.json` for fast documentation workflow retrieval. **[DevOps]**
-- ✅ **Authentication in E2E Tests**: Implemented dev-mode login helper and `beforeEach` hooks in assessment specs for reliable authenticated testing. **[Test Coverage]**
-- ✅ **Mobile Device Emulation**: Added Playwright projects for Pixel 7 (Android) and iPhone 14 (iOS) with dedicated `test:e2e:mobile` script. **[Test Coverage]**
-- ✅ **Visual Regression Testing**: Implemented screenshot comparison tests with configurable diff thresholds for key pages (homepage, login, dashboard, assessment). **[Test Coverage]**
-- ✅ **Mobile UX Verification**: Created test suites for mobile navigation, touch target size compliance (WCAG 44x44px), and responsive assessment flow. **[User Experience]**
-- ✅ **Backend Test Warning Cleanup**: Fixed 6 pytest warnings (Starlette cookie deprecation, SQLAlchemy import path, runpy warnings) achieving zero-warning test runs. **[Test Coverage]**
-- ✅ **Frontend ESLint Cleanup**: Fixed 20 ESLint errors across 10 files (unused imports, config globals, multi-word component names, test assertions). **[Maintainability]**
-- ✅ **Vitest/Playwright Isolation**: Configured Vitest to exclude `tests/e2e/**` preventing Playwright tests from being incorrectly run as unit tests. **[Test Coverage]**
-- ✅ **Frontend Build Verification**: Added `npm run validate` script that chains lint → unit tests → production build for mandatory validation workflow. **[DevOps]**
-- ✅ **Redis Automation**: Integrated Redis into the `start_dev.sh` script with automated installation checks, background startup (`redis-server --daemonize yes`), and cleanup on exit. Re-enabled Redis by default in backend configuration. **[DevOps]**
-- ✅ **Redis Resilience**: Implemented strict guarding and information-level fallback logging to ensure backend stability when Redis is disabled or unreachable. **[Architecture]**
-- ✅ **Database Access Standardization**: Unified all non-request DB operations under a robust context manager pattern. **[Architecture]**
-- ✅ **PDF Download Feature**: Added professional PDF export for user gift profiles using `jsPDF`. **[Logic & Features]**
-- ✅ **Gravatar Integration**: Implemented user avatars based on email MD5 hashes with fallback handling. Displayed in header and admin user table. **[User Experience]**
-- ✅ **Site Launch & Env Fixes**: Resolved critical venv pathing and port conflict issues for local development reliability. **[DevOps]**
-- ✅ **Test & Lint Hardening**: Fixed all remaining pytest warnings, ESLint errors, and Vitest config issues. **[Maintainability]**
----
-</details>
-
-## 💡 Suggestions for Improvement
-<details>
-
-### **🛠️ Engineering Excellence**
-- **TypeScript Migration**: **[Maintainability]**
-  - **Current**: Frontend is written in standard JavaScript.
-  - **Reason**: Lack of type safety can lead to runtime errors as the codebase grows.
-  - **Proposed**: Transition the frontend to **[TypeScript](https://www.typescriptlang.org/)** for better developer experience and self-documenting code.
-- **Automated Accessibility Regression Suite**: **[Maintainability]**
-  - **Current**: Accessibility is managed via manual review and a high-contrast mode toggle.
-  - **Reason**: Visual and functional changes can easily degrade compliance with ARIA standards without immediate feedback.
-  - **Proposed**: Integrate **[Axe-core](https://github.com/dequelabs/axe-core-npm)** into the Vitest or Playwright suite for automated accessibility testing on every CI run.
-- **Searchable Command Palette**: **[User Experience]**
-  - **Current**: Navigation is becoming increasingly complex as features grow.
-  - **Reason**: Power users often prefer keyboard-driven navigation to find specific tools or reports quickly.
-  - **Proposed**: Implement a **[Command Palette](https://kbar.vercel.app/)** (`Ctrl+K`) for instant access to assessment, results, and administrative tools.
-### **🎨 User Experience**
-- **Internationalization (i18n)**: **[User Experience]** 🆕
-  - **Current**: App is hardcoded in English.
-  - **Reason**: Spiritual gifts are a global concept; language barriers limit the app's mission and accessibility.
-  - **Proposed**: Implement **[vue-i18n](https://vue-i18n.intlify.dev/)** and translate content (questions, definitions) into Spanish and French.
-- **Dark Mode Persistence**: **[User Experience]** 🆕
-  - **Current**: Theme resets on page reload or session change.
-  - **Reason**: User preference for "synth-dark" styling should be respected across sessions for a premium feel.
-  - **Proposed**: Persist theme settings in user profiles (backend) and sync with local storage for instant application.
-- **D3.js Visualization Overhaul**: **[User Experience]** ✅ *Implemented 2025-12-24*
-  - **Current**: Charts now use custom **D3.js** for bespoke styling and performance.
-  - **Proposed**: Keep investigating fluid micro-animations for the radar chart transitions.
-- **Offline Support**: **[Architecture]**
-  - **Current**: The app requires an active internet connection to load.
-  - **Reason**: Users may want to read their results or browse gift definitions in low-connectivity environments.
-  - **Proposed**: Implement a service worker for basic offline capabilities and cached assessment content using **[PWA](https://web.dev/progressive-web-apps/)** standards.
-- **Scripture Pre-fetching**: **[User Experience]**
-  - **Current**: Scriptures are fetched only when the popover is opened.
-  - **Reason**: Network latency can cause a noticeable delay in showing the scripture content.
-  - **Proposed**: Pre-fetch scripture content for the user's top 3 gifts on the results page to ensure instant display.
-- **PDF Results Export**: **[Logic & Features]** ✅ *Implemented via jsPDF*
-
-### **📈 Analytics & Monitoring**
-- **Admin Log Export**: **[Analytics & Monitoring]**
-  - **Current**: Logs are viewable but cannot be exported.
-  - **Reason**: Complex analysis or archival often requires external tools like Excel or BI suites.
-  - **Proposed**: Implement a "Download CSV" feature in the Admin Dashboard that exports the currently filtered log view.
-
-
-- **Log Retention & Rotation**: **[Observability]**
-  - **Current**: Logs grow indefinitely in the database.
-  - **Reason**: Unbounded table growth will eventually lead to storage exhaustion and performance degradation.
-  - **Proposed**: Implement a retention policy and automatic rotation for database-backed logs.
-- **Health Check Alerting**: **[Observability]**
-  - **Current**: Admins must actively look at the dashboard to see outages.
-  - **Reason**: Critical failures might go unnoticed for hours.
-  - **Proposed**: Integrate a push notification system (e.g., via Postmark or Slack webhook) that triggers when the `/health` endpoint reports a degraded state for > 5 minutes.
-
-
-### **🚀 DevOps & Architecture**
-- **CI/CD Pipeline**: **[DevOps]**
-  - **Current**: Testing and linting are performed manually by developers.
-  - **Reason**: Risk of merging code that breaks tests or follows inconsistent styling.
-  - **Proposed**: Set up **[GitHub Actions](https://github.com/features/actions)** for automated testing and linting on every pull request.
-- **Docker Containerization**: **[DevOps]**
-  - **Current**: Development environments are managed via scripts and local venvs.
-  - **Reason**: "It works on my machine" issues can occur due to differing local configurations.
-  - **Proposed**: Create a Dockerfile and docker-compose setup for consistent local and production environments.
-- **Content Management System (CMS) Integration**: **[Architecture]**
-  - **Current**: Questions and gift definitions are stored in static JSON files.
-  - **Reason**: Modifying content requires a code change and re-deployment.
-  - **Proposed**: Move static content to the database and provide an administrative interface for easier content updates.
-- **Multi-Factor Authentication (MFA) for Admins**: **[Security]**
-  - **Current**: Admin accounts use standard magic link authentication.
-  - **Reason**: Administrative access is highly sensitive and requires an additional layer of protection.
-  - **Proposed**: Implement **[TOTP](https://en.wikipedia.org/wiki/Time-based_one-time_password)** (e.g., Google Authenticator) for users with the `admin` role.
-- **User Impersonation for Support**: **[Support]**
-  - **Current**: Admins cannot view the dashboard as a specific user.
-  - **Reason**: Troubleshooting user-specific issues (e.g., missing results) is difficult without seeing their view.
-  - **Proposed**: Add a "Login as User" feature for admins to safely impersonate users for support purposes.
-- **Automated Security Audits**: **[Security]**
-  - **Current**: Security reviews are manual.
-  - **Reason**: New vulnerabilities in dependencies can appear at any time.
-  - **Proposed**: Implement automated security scanning for Python dependencies (`safety`) and JavaScript packages (`npm audit`) in CI/CD.
-- **Admin: User Role Management UI**: **[Security]**
-  - **Current**: Roles are assigned via seeding or manual database updates.
-  - **Reason**: Promoting/demoting users should be a safe, UI-driven process for administrators.
-  - **Proposed**: Add a "Edit Role" modal to the User Management tab in the Admin Dashboard.
-  - **Proposed**: Implement frontend i18n using **[vue-i18n](https://vue-i18n.intlify.dev/)** and translate core content into Spanish, French, etc.
-- **Email Delivery Observability**: **[Security]**
-  - **Current**: Magic links are dispatched via Neon Auth integration.
-  - **Reason**: Admins have no visibility into delivery failures (e.g., bounced emails, spam filtering), leading to silent user lockouts.
-  - **Proposed**: Implement a dedicated email service (e.g., **[Postmark](https://postmarkapp.com/)**) with webhook support to log delivery status back to the admin dashboard.
-- **Security Hardening**: **[Security]** ✅ *Implemented 2025-12-24*
-  - **Current**: CSRF protection via synchronizer tokens; Security Headers middleware.
-- **Security Headers**: **[Security]** ✅ *Implemented 2025-12-24*
-  - **Current**: HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy set on all responses.
-- **API Caching**: **[Architecture]** ✅ *Implemented via Redis*
-- **Distributed Rate Limiting**: **[Scalability]** ✅ *Implemented via Redis*
-- **Database Session Management**: **[Architecture]** ✅ *Implemented via Context Manager*
-
+### Phase 4: Scale
+- [ ] SSO integration (SAML/OAuth)
+- [ ] Custom branding per org
+- [ ] API access for integrations
 
 ---
-</details>
 
-## 📊 Summary Assessment
-| Category | Rating | Priority |
-| :--- | :--- | :--- |
-| **Logic & Features** | 🟢 Advanced | Low |
-| **Architecture** | 🟢 Distributed | Low |
-| **Security** | 🟢 Hardened | Low |
-| **Maintainability** | 🟢 High | Low |
-| **Data Integrity** | 🟢 Unified | Low |
-| **Test Coverage** | 🟢 Complete (100%) | Low |
-| **Observability** | 🟢 Mature | Low |
-| **DevOps** | 🟢 Validated | Low |
+## 💡 Future Improvements
+
+| Category | Item | Priority |
+|----------|------|----------|
+| **DevOps** | CI/CD with GitHub Actions | High |
+| **DevOps** | Docker containerization | Medium |
+| **UX** | Internationalization (i18n) | Medium |
+| **UX** | Offline PWA support | Low |
+| **Security** | MFA for admins | Medium |
+| **Analytics** | Log CSV export | Low |
+
+---
+
+## 📁 Documentation
+
+| Path | Description |
+|------|-------------|
+| `docs/business/` | Sales pitch, delivery analysis, SaaS plan |
+| `docs/walkthroughs/` | Implementation details (65+ docs) |
+| `docs/archive/` | Completed improvements archive |
+| `CHANGELOG.md` | Release history |
+| `VERSION.json` | Current version info |
+
+---
+
+## 📊 Health Status
+
+All systems operational as of v1.0.0 release.
+
+| Metric | Value |
+|--------|-------|
+| Backend Coverage | 99% (116 tests) |
+| Security | Hardened (CSRF, Headers, RBAC) |
+| Performance | D3 charts, lazy loading |
+| Accessibility | WCAG 2.1 AA |
+
+---
+
+## ✅ Recently Completed (2025-12-24) 🆕
+
+### SaaS Phase 1: Multi-Tenancy Foundation
+- **Organization Model**: UUID pk, slug, plan, stripe_customer_id fields
+- **Tenant Isolation**: org_id on User, Survey, LogEntry with filtering
+- **6 New API Endpoints**: Create org, get/update org, list members, invite, check-slug
+- **Frontend Store**: `organization.js` Pinia store with full CRUD
+- **Settings Page**: `OrganizationSettings.vue` with create/edit/invite UI
+- **Test Coverage Restored**: 32 new org tests (99% backend coverage) 🆕
+
+### Business Documentation
+- `docs/business/sales-pitch.md` - Product pitch with FAQ
+- `docs/business/delivery-model-analysis.md` - 5 delivery options compared
+- `docs/business/saas-implementation-plan.md` - 12-week roadmap
+
+### Version System
+- `VERSION.json` - Centralized version tracking
+- `CHANGELOG.md` - Release history (v1.0.0)
+- `.agent/workflows/version-bump.md` - SemVer workflow
