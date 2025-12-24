@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-24 | [100% Backend Test Coverage](./2025-12-24-100-backend-coverage.md) | Achieved full code coverage across all backend modules. |
 | 2025-12-24 | [SaaS Phase 2: Stripe Monetization](./2025-12-24-saas-phase-2-stripe-monetization.md) | Full Stripe integration with plan enforcement and UI tracking. |
 | 2025-12-24 | [Security Hardening](./2025-12-24-security-hardening.md) | Implemented CSRF protection and security headers middleware. |
 | 2025-12-24 | [PDF Generation Refactor](./2025-12-24-pdf-generation-refactor.md) | Fixed white-on-white text, corrected score scaling (40-point), and improved page-break logic. |
