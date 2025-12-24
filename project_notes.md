@@ -13,6 +13,7 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 | **Backend** | FastAPI, SQLAlchemy, PostgreSQL (Neon) |
 | **Auth** | Magic Link + JWT (HttpOnly Cookies) |
 | **Security** | CSRF protection, Security Headers, RBAC |
+| **Billing** | Stripe (Checkout, Webhooks, Portal) |
 | **Caching** | Redis (with in-memory fallback) |
 | **Testing** | Pytest (99%), Vitest, Playwright |
 
@@ -23,13 +24,15 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 ### Frontend
 - 📝 **Assessment Wizard** - 40-question multi-step flow with progress tracking
 - 📊 **D3.js Visualizations** - Radar, bar, and trend charts with synth-glow styling
+- 💳 **Billing Dashboard** - Subscription management, plan comparison, usage tracking
 - 📄 **Themed PDF Export** - Digital (dark) and Print (light) modes
 - 👑 **Admin Dashboard** - Logs, Users, Schema ERD viewer
 - ♿ **Accessibility** - WCAG 2.1 AA, high-contrast mode, keyboard navigation
 
 ### Backend
 - 🔐 **Secure Auth** - Magic links, CSRF tokens, rate limiting
-- 📈 **Survey Engine** - Answer storage, scoring, history
+- 💰 **Billing Logic** - Stripe integration, webhook processing, portal sessions
+- 🛡️ **Plan Enforcement** - Feature gating based on subscription tiers
 - 📋 **Admin APIs** - Paginated logs/users, schema introspection
 - 🏢 **Multi-Tenancy** - Organization model, member management
 
@@ -39,9 +42,34 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Suite | Status |
 |-------|--------|
-| Backend (pytest) | 99% (116 tests) ✅ |
-| Frontend Unit (Vitest) | 122 tests (19 files) |
-| E2E (Playwright) | 36 passed, 8 skipped |
+| Backend (pytest) | 99% (141 tests) ✅ |
+| Frontend Unit (Vitest) | 122 passed (19 files) ✅ |
+| E2E (Playwright) | 36 passed, 4 skipped ✅ |
+
+### Latest Test Results
+
+#### Backend Coverage Snippet
+```text
+TOTAL                               950      8    99%
+141 passed in 5.59s
+```
+
+#### Frontend Unit Snippet
+```text
+ Test Files  19 passed (19)
+      Tests  122 passed (122)
+   Start at  16:56:17
+   Duration  12.77s
+```
+
+#### E2E (Cached)
+```text
+"stats": {
+  "expected": 36,
+  "skipped": 4,
+  "unexpected": 0
+}
+```
 
 ---
 
@@ -52,12 +80,13 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 - [x] Tenant isolation (org_id filtering)
 - [x] Frontend organization store & settings page
 
-### Phase 2: Monetization (Next)
-- [ ] Stripe integration
-- [ ] Pricing tiers (Free, Starter, Growth, Enterprise)
-- [ ] Subscription management UI
+### Phase 2: Monetization ✅
+- [x] Stripe integration
+- [x] Pricing tiers (Free, Starter, Growth, Enterprise)
+- [x] Subscription management UI
+- [x] Plan enforcement (Feature gating)
 
-### Phase 3: Onboarding
+### Phase 3: Onboarding (Next)
 - [ ] Organization setup wizard
 - [ ] Member invitation emails
 - [ ] Marketing landing page
@@ -73,12 +102,28 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Category | Item | Priority |
 |----------|------|----------|
+| **Billing** | Webhook Idempotency 🆕 | High |
+| **UX** | Deep UI Gating 🆕 | Medium |
 | **DevOps** | CI/CD with GitHub Actions | High |
-| **DevOps** | Docker containerization | Medium |
 | **UX** | Internationalization (i18n) | Medium |
-| **UX** | Offline PWA support | Low |
 | **Security** | MFA for admins | Medium |
-| **Analytics** | Log CSV export | Low |
+
+### Suggestions Detail
+
+#### 1. Webhook Idempotency 🆕
+- **Current Implementation**: Webhooks are processed immediately in `BillingService`.
+- **Reason for Change**: Prevent duplicate processing if Stripe retries a successful event.
+- **Proposed Change**: Store `stripe_event_id` in a `ProcessedEvents` table or use Redis to track processed IDs for 24 hours.
+
+#### 2. Deep UI Gating 🆕
+- **Current Implementation**: Plan limits are shown in the Billing tab but features aren't visually hidden.
+- **Reason for Change**: Better UX by proactively hiding/disabling buttons for features not in the user's plan.
+- **Proposed Change**: Use the `isFeatureEnabled` getter in the Pinia store to conditionally render export buttons and admin links.
+
+#### 3. Automated CI/CD
+- **Current Implementation**: Manual deployments and testing.
+- **Reason for Change**: Ensure no regressions reach production and automate scaling.
+- **Proposed Change**: Implement GitHub Actions for backend/frontend tests and automated Netlify/Render deployment.
 
 ---
 
@@ -96,26 +141,31 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 ## 📊 Health Status
 
-All systems operational as of v1.0.0 release.
+All systems operational as of v1.1.0 (SaaS Phase 2 release).
 
 | Metric | Value |
 |--------|-------|
-| Backend Coverage | 99% (116 tests) |
-| Security | Hardened (CSRF, Headers, RBAC) |
+| Backend Coverage | 100% on Billing/Org modules |
+| Security | Hardened (CSRF, Headers, RBAC, Plan Enforcement) |
 | Performance | D3 charts, lazy loading |
-| Accessibility | WCAG 2.1 AA |
 
 ---
 
 ## ✅ Recently Completed (2025-12-24) 🆕
 
+### SaaS Phase 2: Stripe Monetization
+- **Stripe Integration**: Added `BillingService` for Checkout and Portal sessions.
+- **Webhook Handling**: Secure processing of subscription lifecycle events.
+- **Plan Enforcement**: Created `require_plan_feature` dependency for backend gating.
+- **Billing UI**: Integrated subscription management into `OrganizationSettings.vue`.
+- **Dependency Refactor**: Moved `get_current_org` to dedicated dependency file to resolve circular imports.
+- **Test Coverage**: Achieved 100% logic coverage for all new billing components.
+
 ### SaaS Phase 1: Multi-Tenancy Foundation
 - **Organization Model**: UUID pk, slug, plan, stripe_customer_id fields
-- **Tenant Isolation**: org_id on User, Survey, LogEntry with filtering
 - **6 New API Endpoints**: Create org, get/update org, list members, invite, check-slug
 - **Frontend Store**: `organization.js` Pinia store with full CRUD
 - **Settings Page**: `OrganizationSettings.vue` with create/edit/invite UI
-- **Test Coverage Restored**: 32 new org tests (99% backend coverage) 🆕
 
 ### Business Documentation
 - `docs/business/sales-pitch.md` - Product pitch with FAQ
