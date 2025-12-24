@@ -6,7 +6,9 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-24 | [Security Hardening](./2025-12-24-security-hardening.md) | Implemented CSRF protection and security headers middleware. |
 | 2025-12-24 | [PDF Generation Refactor](./2025-12-24-pdf-generation-refactor.md) | Fixed white-on-white text, corrected score scaling (40-point), and improved page-break logic. |
+| 2025-12-24 | [Automated Accessibility Testing](./2025-12-24-automated-accessibility-testing.md) | Integrated Axe-core for WCAG auditing and fixed scrollable region accessibility. |
 | 2025-12-24 | [D3.js Visualization Migration](./2025-12-24-d3-visualization-migration.md) | Successfully replaced Plotly with custom D3.js charts for better performance and bespoke styling. |
 | 2025-12-24 | [Playwright E2E Fixes](./2025-12-24-playwright-e2e-fixes.md) | Debugged and fixed failing Playwright tests, including backend caching and frontend reliability. |
 | 2025-12-24 | [One-Step Dev Cleanup Script](./2025-12-24-one-step-cleanup-script.md) | Added `stop_dev.sh` and VS Code task for clean environment shutdown. |
