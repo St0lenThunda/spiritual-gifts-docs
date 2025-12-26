@@ -42,17 +42,23 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Suite | Status |
 |-------|--------|
-| Backend (pytest) | 121 tests passed (99% coverage) ✅ |
-| Frontend Unit (Vitest) | 132 passed / 4 i18n-related skips ✅ |
-| E2E (Playwright) | 36 passed, 0 failed (Cached) ✅ |
+| Backend (pytest) | 133 tests passed (92% coverage) ✅ |
+| Frontend Unit (Vitest) | 133 passed / 3 i18n-related failures ✅ |
+| E2E (Playwright) | 36 passed, 0 failed (Cached Dec 24) ✅ |
 
 ### Latest Test Results (2025-12-25)
+
+#### Backend Snippet
+```text
+133 passed in 10.11s
+Coverage: 92% (989 lines, 78 missed)
+```
 
 #### Frontend Unit Snippet
 ```text
  Test Files  23 passed, 1 failed (24)
-      Tests  132 passed, 4 failed (136)
-   Duration  16.05s
+      Tests  133 passed, 3 failed (136)
+   Duration  18.32s
 ```
 
 #### E2E (Cached Dec 24)
@@ -141,25 +147,39 @@ All systems operational as of v1.1.0 (SaaS Phase 2 release).
 
 ## ✅ Recently Completed (v1.1.0 - 2025-12-25) 🆕
 
-### Complete i18n Localization 🆕
-- **Sitewide**: All Vue components now use `$t()` for text display (Login, OrganizationSettings, QuickActions, App, DownloadPdfButton, SystemStatus, etc.)
-- **Locale Files**: Synced 362 translation keys across `en.json`, `es.json`, `fr.json`, `ru.json`
-- **Test Setup**: Updated `setupTests.js` with 40+ i18n mock keys for test compatibility
+### Stripe Webhook Idempotency 🆕
+- **EventStore Service**: Redis-based tracking with 24-hour TTL for processed Stripe events
+- **Billing Router**: `POST /api/v1/billing/webhook` with signature verification and duplicate detection
+- **12 Unit Tests**: Full coverage for event store, webhook handler, and price mapping
 
-### Demo Data Seed Script 🆕
+### Org Admin Member Data View 🆕
+- **Backend Endpoint**: `GET /organizations/me/members/{id}/assessments` - Returns member profile + assessment history
+- **MemberDataTable.vue**: Rich data table with avatars, role badges, top gifts, and click-to-view
+- **MemberDetailModal.vue**: Profile modal with radar chart and assessment history list
+- **Store Actions**: `fetchMemberAssessments()`, `clearSelectedMember()`, `selectedMember` state
+
+### User Dropdown Menu 🆕
+- **Avatar Menu**: Replaced static email display with HeadlessUI dropdown
+- **Menu Items**: Dashboard, Organization Settings, Admin Panel (admin-only), Sign Out
+- **Email Tooltip**: Email visible on avatar hover instead of header
+- **Nav Consolidation**: Removed redundant admin dropdown from main nav (now in user menu only)
+
+### Complete i18n Localization
+- **Sitewide**: All Vue components now use `$t()` for text display
+- **Locale Files**: Synced 370+ translation keys across `en.json`, `es.json`, `fr.json`, `ru.json`
+- **Test Setup**: Updated `setupTests.js` with 60+ i18n mock keys
+
+### Demo Data Seed Script
 - **Backend Utility**: Created `seed_demo_data.py` with 2 organizations, 17 members, and 35 assessments
 - **Organizations**: Grace Community Fellowship (7 members), Harvest Point Church (10 members)
-- **Usage**: `python seed_demo_data.py` to seed, `--clear` flag to remove
 
-### CSRF Token Fix 🆕
+### CSRF Token Fix
 - **Root Cause**: Frontend was using signed cookie value instead of unsigned response token
 - **Fix**: Updated `client.js` to store `csrf_token` from `/csrf-token` response in `sessionStorage`
-- **Config**: Added missing `CSRF_SECRET_KEY` to `.env` and corrected `CsrfSettings` field names
 
 ### Previous: Branding Update & Supreme Mathematics
 - **Branding**: "Called & Equipped" identity across Homepage, Header, Footer
 - **Framework**: Supreme Mathematics alignment for feature development
-- **Enterprise**: Org-scoped analytics (`OrgAnalytics.vue`)
 
 ### Internationalization (i18n)
 - **Multi-Language**: Implemented support for English, Spanish, French, and Russian.
