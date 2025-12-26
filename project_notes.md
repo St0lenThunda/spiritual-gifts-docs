@@ -42,23 +42,23 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Suite | Status |
 |-------|--------|
-| Backend (pytest) | 133 tests passed (92% coverage) ✅ |
-| Frontend Unit (Vitest) | 133 passed / 3 i18n-related failures ✅ |
+| Backend (pytest) | 142 passed / 1 failed (95% coverage) ⚠️ |
+| Frontend Unit (Vitest) | 156 passed / 3 failed (i18n/text mismatch) ⚠️ |
 | E2E (Playwright) | 36 passed, 0 failed (Cached Dec 24) ✅ |
 
 ### Latest Test Results (2025-12-25)
 
 #### Backend Snippet
 ```text
-133 passed in 10.11s
-Coverage: 92% (989 lines, 78 missed)
+142 passed, 1 failed in 10.43s
+Coverage: 95% (994 lines, 45 missed)
 ```
 
 #### Frontend Unit Snippet
 ```text
- Test Files  23 passed, 1 failed (24)
-      Tests  133 passed, 3 failed (136)
-   Duration  18.32s
+ Test Files  25 passed, 1 failed (26)
+      Tests  156 passed, 3 failed (159)
+   Duration  21.86s
 ```
 
 #### E2E (Cached Dec 24)
@@ -147,7 +147,18 @@ All systems operational as of v1.1.0 (SaaS Phase 2 release).
 
 ## ✅ Recently Completed (v1.1.0 - 2025-12-25) 🆕
 
-### Stripe Webhook Idempotency 🆕
+### Deep UI Gating 🆕
+- **Tier Feature Matrix**: users, admins, assessmentsPerMonth, historyDays, exports, orgSupport, customWeighting
+- **useFeatureGate Composable**: `canUse`, `showUpgrade`, `isAtLimit`, `remaining` for plan-based feature checks
+- **UpgradePrompt.vue**: Inline/card/banner variants for upgrade CTAs
+- **23 Unit Tests**: Full coverage for composable and component
+
+### axe-core Accessibility Testing 🆕
+- **vue-axe**: Dev overlay for real-time a11y feedback (console warnings)
+- **Playwright E2E**: 7 a11y tests for WCAG 2.1 AA compliance
+- **Documentation**: `docs/accessibility-testing.md` usage guide
+
+### Stripe Webhook Idempotency
 - **EventStore Service**: Redis-based tracking with 24-hour TTL for processed Stripe events
 - **Billing Router**: `POST /api/v1/billing/webhook` with signature verification and duplicate detection
 - **12 Unit Tests**: Full coverage for event store, webhook handler, and price mapping
@@ -187,6 +198,11 @@ All systems operational as of v1.1.0 (SaaS Phase 2 release).
 
 ### SaaS Phase 2: Stripe Monetization
 - **Stripe Integration**: Added `BillingService` for Checkout and Portal sessions.
+- **Subscription Management**: Webhook handling for subscription updates and cancellations.
+
+### Future / TODOs
+- [ ] **Theme Testing**: Test and refine new Light Theme presets (Salt & Light, Living Water, Dove's Wing).
+- [ ] **White-Labeling**: Verify custom branding persistence and UI injection across different sessions.
 - **Webhook Handling**: Secure processing of subscription lifecycle events.
 - **Plan Enforcement**: Created `require_plan_feature` dependency for backend gating.
 - **Billing UI**: Integrated subscription management into `OrganizationSettings.vue`.
