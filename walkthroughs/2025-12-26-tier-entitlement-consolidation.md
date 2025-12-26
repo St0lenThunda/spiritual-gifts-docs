@@ -29,3 +29,9 @@ Refactored the spiritual gifts assessment tier management from scattered fronten
 - Verified API response includes correct entitlement objects for "free" tier (10 users, 30-day history).
 - Verified `invite_member` rejects requests when seat limits are exceeded.
 - Verified frontend store correctly maps backend data to existing UI feature flags.
+
+## Frontend Cleanup (Legacy Removal)
+- **Deleted `useFeatureGate.js`**: Removed unused legacy composable that duplicated entitlement logic.
+- **Updated `organization.js`**: Added `analytics` and `manageSubscription` to the fallback plan definitions to ensure proper feature gating even if backend entitlements are missing.
+- **Refactored `OrganizationSettings.vue`**: Replaced hardcoded checks for `growth`/`enterprise` plans with semantic `isFeatureEnabled('analytics')` and `isFeatureEnabled('manageSubscription')` checks.
+- **Added `branding` Entitlement**: Explicitly added `branding: true` to Ministry and Church plans in the store to fix missing theme controls.

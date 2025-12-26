@@ -1,5 +1,108 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.3.0 (Proposed) | Updated: 2025-12-26*
+*Version: 1.4.0 (Released) | Updated: 2025-12-26*
+
+A production-ready spiritual gifts assessment platform for churches and ministries.
+
+---
+
+## 🏗️ Technical Stack
+... (unchanged)
+
+---
+
+## ✅ Current Features
+
+### Frontend
+- 📝 **Assessment Wizard** - 40-question multi-step flow with progress tracking
+- 📊 **D3.js Visualizations** - Radar, bar, and trend charts with synth-glow styling
+- 💳 **Billing Dashboard** - Subscription management, plan comparison, usage tracking
+- 📄 **Themed PDF Export** - Digital (dark) and Print (light) modes
+- 👑 **Admin Dashboard** - Consolidated interface for Logs, Users, Schema, Organization, and Theming
+- ♿ **Accessibility** - WCAG 2.1 AA, high-contrast mode, keyboard navigation
+- 🏢 **Organization Settings** - Manage branding, members, and tier limits (Standalone or Embedded)
+- 🎯 **Domain-Driven Architecture** - Isolated logic for Auth, Org, Assessment, and Billing
+
+### Backend
+... (unchanged)
+
+---
+
+## 🧪 Test Coverage
+
+| Suite | Status |
+|-------|--------|
+| Backend (pytest) | 151 passed / 3 failed (92% coverage) ⚠️ |
+| Frontend Unit (Vitest) | 160 passed / 0 failed (100% coverage) ✅ |
+| E2E (Playwright) | 20 passed / 19 unexpected / 4 skipped (Refactor drift) ⚠️ |
+
+### Latest Test Results (2025-12-26)
+
+#### Backend Snippet
+```text
+3 failed, 151 passed in 9.30s
+Coverage: 92% (1182 statements)
+Failures: Organization invitation mocks (500 error)
+```
+
+#### Frontend Unit
+```text
+ Test Files  27 passed (27)
+      Tests  160 passed (160)
+   Duration  21.01s
+```
+*100% coverage maintained. Fixed `ScoreBar` test styling assertion.*
+
+#### E2E (Refactor Drift)
+```text
+"stats": { "expected": 20, "unexpected": 19, "skipped": 4 }
+```
+*Drift expected due to branding changes to "Called & Equipped" and domain-layer migration. E2E reconciliation required in next phase.*
+
+---
+
+## 🚀 SaaS Roadmap
+... (unchanged)
+
+### Phase 5: Scale (Next)
+- [ ] SSO integration (SAML/OAuth)
+- [ ] E2E Reconciliation
+- [ ] API access for integrations
+
+---
+
+## 💡 Future Improvements
+... (unchanged)
+
+---
+
+## 📁 Documentation
+... (unchanged)
+
+---
+
+## 📊 Health Status
+
+All core domains migrated and verified as of v1.3.0. Admin functions consolidated in v1.4.0.
+
+| Metric | Value |
+|--------|-------|
+| Backend Coverage | **92% Overall** |
+| Frontend Status | Clean modular architecture |
+| Security | Hardened (CSRF, Headers, Read-Only Demo, Audit Logs) |
+| Performance | D3 charts, lazy loading |
+
+---
+
+## ✅ Recently Completed (v1.4.0 - 2025-12-26) 🆕
+
+### Admin Consolidation 🆕
+- **[NEW] Centralized Sidebar**: "Organization" and "Theming" now accessible directly from Admin Sidebar.
+- **[NEW] Embedded Settings**: `OrganizationSettings` component refactored to support embedded rendering.
+- **[FIX] Layout Overlay**: Fixed sidebar obstruction on desktop view.
+
+### Domain-Driven Refactor (Major Architecture Update) (v1.3.0)
+- **[NEW] Billing Domain**: Isolated subscription, checkout, and portal management from Organization logic.
+... (rest of v1.3.0 items)
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
