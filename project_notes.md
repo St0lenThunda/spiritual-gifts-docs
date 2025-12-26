@@ -45,7 +45,7 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 | Suite | Status |
 |-------|--------|
 | Backend (pytest) | 146 passed / 3 failed (93% coverage) ⚠️ |
-| Frontend Unit (Vitest) | 156 passed / 3 failed (i18n/text mismatch) ⚠️ |
+| Frontend Unit (Vitest) | 160 passed / 0 failed (100% coverage) ✅ |
 | E2E (Playwright) | 36 passed, 0 failed, 4 skipped (Cached Dec 24) ✅ |
 
 ### Latest Test Results (2025-12-25)
@@ -57,13 +57,13 @@ Coverage: 93% (1059 lines, 75 missed)
 ```
 *Failures related to recent auth signature changes (regression).*
 
-#### Frontend Unit Snippet
+#### Frontend Unit (2025-12-26)
 ```text
- Test Files  25 passed, 1 failed (26)
-      Tests  156 passed, 3 failed (159)
-   Duration  21.86s
+ Test Files  26 passed (26)
+      Tests  160 passed (160)
+   Duration  24.07s
 ```
-*Failures in InstructionsModal.spec.js (likely i18n keys).*
+*Successfully resolved i18n mismatches and stats card count issues.*
 
 #### E2E (Cached Dec 24)
 ```text

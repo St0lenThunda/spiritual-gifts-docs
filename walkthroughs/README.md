@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-26 | [Frontend Auth Domain Refactor](./2025-12-26-frontend-auth-refactor.md) | Centralized auth logic into `src/domain/auth` with improved TS support. |
 | 2025-12-25 | [Rebranding: Called & Equipped](./2025-12-25-rebranding-called-and-equipped.md) | Full terminology shift to 'Discernment' and 'Formation'. |
 | 2025-12-25 | [Enterprise Org Analytics](./2025-12-25-enterprise-analytics.md) | Org-scoped dashboard and analytics backend |
 | 2025-12-24 | [Locale & Scripture Fixes](./2025-12-24-locale-and-scripture-fix.md) | Fixed survey questions not updating on language change and missing scripture popovers. |
