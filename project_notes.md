@@ -172,6 +172,7 @@ All systems operational as of v1.2.0.
 - **Authentication Domain**: Centralized login, magic links, and session management.
 - **Organization Domain**: Consolidated multi-tenant logic, billing portal integration, and analytics retrieval.
 - **Assessment Domain**: Refactored submission, history, and gift definitions into a centralized module.
+- **Billing Domain**: Isolated subscription status, checkout sessions, and portal management from the organization domain.
 - **Architectural Enhancements**: 
   - **Decoupled Stores**: Pinia stores are now lightweight state managers, delegating business logic to domain modules.
   - **Ready for TypeScript**: Domain modules provide a clear path for progressive TypeScript adoption with strong typing for API responses.
