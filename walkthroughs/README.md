@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-26 | [Tier Entitlement Consolidation](./2025-12-26-tier-entitlement-consolidation.md) | Centralized feature-flag and limit enforcement |
 | 2025-12-26 | [Scoring Transparency](./2025-12-26-scoring-transparency.md) | Narrative indicators and context notes for results |
 | 2025-12-26 | [Billing Domain Migration](./2025-12-26-billing-domain-migration.md) | Isolated subscription, checkout, and portal management into a dedicated domain. |
 | 2025-12-26 | [Assessment Domain Migration](./2025-12-26-assessment-domain-migration.md) | Centralized assessment logic (submission, history, questions) into a domain layer. |
