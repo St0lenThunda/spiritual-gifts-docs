@@ -168,6 +168,14 @@ All systems operational as of v1.2.0.
 - **Limits**: Enforced limits for users, admins, and assessment history
 - **UI**: Updated billing and settings pages to reflect new tiers
 
+### Domain-Driven Refactor (v1.2.1 - 2025-12-26) 🆕
+- **Authentication Domain**: Centralized login, magic links, and session management.
+- **Organization Domain**: Consolidated multi-tenant logic, billing portal integration, and analytics retrieval.
+- **Architectural Enhancements**: 
+  - **Decoupled Stores**: Pinia stores are now lightweight state managers, delegating business logic to domain modules.
+  - **Ready for TypeScript**: Domain modules provide a clear path for progressive TypeScript adoption with strong typing for API responses.
+  - **Enhanced Testability**: 100% frontend unit test pass rate achieved by isolating logic from component/store context.
+
 ### Deep UI Gating (v1.1.0)
 - **Tier Feature Matrix**: users, admins, assessmentsPerMonth, historyDays, exports, orgSupport, customWeighting
 - **useFeatureGate Composable**: `canUse`, `showUpgrade`, `isAtLimit`, `remaining` for plan-based feature checks
