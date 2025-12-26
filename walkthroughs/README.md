@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-26 | [Dashboard Theme Refactor](./2025-12-26-dashboard-theme-refactor.md) | Refactored Dashboard and core components to use semantic theme variables. |
 | 2025-12-26 | [Tier Entitlement Consolidation](./2025-12-26-tier-entitlement-consolidation.md) | Centralized feature-flag and limit enforcement |
 | 2025-12-26 | [Scoring Transparency](./2025-12-26-scoring-transparency.md) | Narrative indicators and context notes for results |
 | 2025-12-26 | [Billing Domain Migration](./2025-12-26-billing-domain-migration.md) | Isolated subscription, checkout, and portal management into a dedicated domain. |
