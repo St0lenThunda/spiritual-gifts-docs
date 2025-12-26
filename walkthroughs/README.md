@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-25 | [Rebranding: Called & Equipped](./2025-12-25-rebranding-called-and-equipped.md) | Full terminology shift to 'Discernment' and 'Formation'. |
+| 2025-12-25 | [Enterprise Org Analytics](./2025-12-25-enterprise-analytics.md) | Org-scoped dashboard and analytics backend |
 | 2025-12-24 | [Locale & Scripture Fixes](./2025-12-24-locale-and-scripture-fix.md) | Fixed survey questions not updating on language change and missing scripture popovers. |
 | 2024-12-24 | [Multi-Language Support (ES, FR, RU)](./2025-12-24-multi-language-support.md) | Implemented comprehensive i18n for Spanish, French, and Russian. |
 | 2025-12-24 | [100% Backend Test Coverage](./2025-12-24-100-backend-coverage.md) | Achieved full code coverage across all backend modules. |

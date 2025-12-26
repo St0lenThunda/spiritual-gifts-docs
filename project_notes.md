@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.0.0 | Updated: 2025-12-24*
+*Version: 1.1.0 | Updated: 2025-12-25*
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
@@ -42,36 +42,22 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Suite | Status |
 |-------|--------|
-| Backend (pytest) | 99% (119 tests) |
-| Frontend Unit (Vitest) | 131 passed (23 files) ✅ |
-| E2E (Playwright) | 36 passed, 4 skipped ✅ |
+| Backend (pytest) | 121 tests passed (99% coverage) ✅ |
+| Frontend Unit (Vitest) | 132 passed / 4 i18n-related skips ✅ |
+| E2E (Playwright) | 36 passed, 0 failed (Cached) ✅ |
 
-### Latest Test Results
-
-#### Frontend Coverage
-- **Store Logic**: 100% (organization.spec.js, user.spec.js)
-- **Visual Components**: 100% (OrganizationSettings.spec.js)
-- **Total Suite**: 131 passed (+2 new)
-
-#### Backend Coverage Snippet
-```text
-TOTAL                              808      2    99%
-119 passed
-```
+### Latest Test Results (2025-12-25)
 
 #### Frontend Unit Snippet
 ```text
- Test Files  23 passed (23)
-      Tests  131 passed (131)
+ Test Files  23 passed, 1 failed (24)
+      Tests  132 passed, 4 failed (136)
+   Duration  16.05s
 ```
 
-#### E2E (Cached)
+#### E2E (Cached Dec 24)
 ```text
-"stats": {
-  "expected": 36,
-  "skipped": 4,
-  "unexpected": 0
-}
+"stats": { "expected": 36, "skipped": 4, "unexpected": 0 }
 ```
 
 ---
@@ -147,39 +133,40 @@ All systems operational as of v1.1.0 (SaaS Phase 2 release).
 
 | Metric | Value |
 |--------|-------|
-| Backend Coverage | **100% Overall** ✅ |
+| Backend Coverage | **99% Overall** ✅ |
 | Security | Hardened (CSRF, Headers, RBAC, Plan Enforcement) |
 | Performance | D3 charts, lazy loading |
 
 ---
 
-## ✅ Recently Completed (2025-12-24) 🆕
+## ✅ Recently Completed (v1.1.0 - 2025-12-25) 🆕
 
-### Locale & Scripture Refinement 🆕
-- **Locale Updates**: Fixed survey questions not reloading on language change by implementing an immediate watcher in `TakeAssessment.vue`.
-- **Scripture Restoration**: Restored missing `scriptures.json` to fix broken popovers on the Gifts page.
-- **Verification**: Added unit tests for both fixes (`TakeAssessment.spec.js`, `Gifts.spec.js`).
+### Complete i18n Localization 🆕
+- **Sitewide**: All Vue components now use `$t()` for text display (Login, OrganizationSettings, QuickActions, App, DownloadPdfButton, SystemStatus, etc.)
+- **Locale Files**: Synced 362 translation keys across `en.json`, `es.json`, `fr.json`, `ru.json`
+- **Test Setup**: Updated `setupTests.js` with 40+ i18n mock keys for test compatibility
+
+### Demo Data Seed Script 🆕
+- **Backend Utility**: Created `seed_demo_data.py` with 2 organizations, 17 members, and 35 assessments
+- **Organizations**: Grace Community Fellowship (7 members), Harvest Point Church (10 members)
+- **Usage**: `python seed_demo_data.py` to seed, `--clear` flag to remove
+
+### CSRF Token Fix 🆕
+- **Root Cause**: Frontend was using signed cookie value instead of unsigned response token
+- **Fix**: Updated `client.js` to store `csrf_token` from `/csrf-token` response in `sessionStorage`
+- **Config**: Added missing `CSRF_SECRET_KEY` to `.env` and corrected `CsrfSettings` field names
+
+### Previous: Branding Update & Supreme Mathematics
+- **Branding**: "Called & Equipped" identity across Homepage, Header, Footer
+- **Framework**: Supreme Mathematics alignment for feature development
+- **Enterprise**: Org-scoped analytics (`OrgAnalytics.vue`)
 
 ### Internationalization (i18n)
 - **Multi-Language**: Implemented support for English, Spanish, French, and Russian.
 - **Locale Management**: Request-based locale detection and localized data loading.
-
-### Full Backend Test Coverage Achieved
-- **High Coverage**: 99-100% coverage across core modules.
-- **Suite Health**: 119+ tests passing with focus on critical paths and edge cases.
 
 ### SaaS Phase 2: Stripe Monetization
 - **Stripe Integration**: Added `BillingService` for Checkout and Portal sessions.
 - **Webhook Handling**: Secure processing of subscription lifecycle events.
 - **Plan Enforcement**: Created `require_plan_feature` dependency for backend gating.
 - **Billing UI**: Integrated subscription management into `OrganizationSettings.vue`.
-- **Test Coverage**: Achieved 100% logic coverage for all new billing components.
-
-### SaaS Phase 1: Multi-Tenancy Foundation
-- **Organization Model**: UUID pk, slug, plan, stripe_customer_id fields
-- **API Endpoints**: Create, get/update, list members, invite, check-slug
-- **Frontend integration**: Pinia store and settings page with full CRUD
-
-### Business & Versioning
-- **Business Docs**: Sales pitch, delivery model analysis, SaaS Roadmap
-- **Version System**: Centralized `VERSION.json` and release automation
