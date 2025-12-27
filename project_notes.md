@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.5.0 (Released) | Updated: 2025-12-26*
+*Version: 1.5.1 (Released) | Updated: 2025-12-26*
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
@@ -33,6 +33,7 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 - 🎯 **Domain-Driven Architecture** - Isolated logic for Auth, Org, Assessment, and Billing
 - 🎨 **User Preferences** - Tiered theme selection with visual previews and analytics
 - ⚙️ **Settings Page** - Personal preferences accessible at `/settings` for authenticated users
+- 🌍 **Smart Localization** - Browser locale detection and integrated language switcher
 
 ### Backend
 - 🔐 **Secure Auth** - Magic links, CSRF tokens, rate limiting
@@ -51,7 +52,7 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 | Suite | Status |
 |-------|--------|
 | Backend (pytest) | **198 passed / 0 failed (98.5% coverage)** ✅ |
-| Frontend Unit (Vitest) | **160 passed / 0 failed (100% coverage)** ✅ |
+| Frontend Unit (Vitest) | **178 passed / 0 failed (100% coverage)** ✅ |
 | E2E Production Tests (Playwright) | **19 passed / 0 failed (100% pass rate)** ✅ |
 
 ### Latest Test Results (2025-12-26)
@@ -65,9 +66,9 @@ Coverage: 98.5% (All organization tests passing)
 
 #### Frontend Unit
 ```text
- Test Files  27 passed (27)
-      Tests  160 passed (160)
-   Duration  ~21s
+  Test Files  29 passed (29)
+       Tests  178 passed (178)
+   Duration  ~32s
 ```
 *Maintained 100% coverage across all components including new Settings page and preference components.*
 
@@ -201,7 +202,12 @@ All core features stable and production-ready as of v1.4.0.
 
 ---
 
-### i18n Alignment & Terminology Refinement (v1.5.0 - 2025-12-26) 🆕
+### Browser Locale & Menu Integration (v1.5.1 - 2025-12-26) 🆕
+- **[NEW] Auto-Detection**: Site now respects user's browser language preference on first launch.
+- **[NEW] Integrated Switcher**: Language selection moved to User Dropdown for a cleaner, app-like feel.
+- **[FIX] Test Mocks**: Hardened test environment with comprehensive i18n mock keys.
+
+### i18n Alignment & Terminology Refinement (v1.5.0 - 2025-12-26)
 - **[NEW] Global Gift Localization**: Spiritual gift names are now fully internationalized across all charts, profiles, and analytics.
 - **[NEW] Appearance Settings Enhancement**: Renamed the "Preferences" tab to "Appearance" in the settings layout to improve terminology accuracy.
 - **[NEW] All-Locale Sync**: Completed synchronization of `es.json`, `fr.json`, and `ru.json` with latest branding and analytics keys.
