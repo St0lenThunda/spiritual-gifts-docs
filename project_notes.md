@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.4.0 (Released) | Updated: 2025-12-26*
+*Version: 1.4.1 (Released) | Updated: 2025-12-26*
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
@@ -202,9 +202,16 @@ All core features stable and production-ready as of v1.4.0.
 
 ---
 
-## ✅ Recently Completed (v1.4.0 - 2025-12-26) 🆕
+## ✅ Recently Completed (v1.4.1 - 2025-12-26) 🆕
 
-### User Preferences & Theme Management 🆕
+### UI Enhancements & Theme Consistency 🆕
+- **[NEW] Full Theme Unlock**: All 7 supported themes enabled in the UI (Light, Dark, Synthwave, Living Water, Dove's Wing, Celestial, Sacred)
+- **[NEW] "Do Not Show Again" Instructions**: Implemented user preference to hide assessment directions modal
+- **[FIX] Instant Theme Application**: Refactored logic to use class-based application on `body` for flicker-free transitions
+- **[FIX] Theme Default Alignment**: Aligned frontend default with "Salt & Light" brand (mapped to Light theme)
+- **[FIX] Assessment Cleanup**: Removed temporary dev-only logic and obsolete TODOs
+
+### User Preferences & Theme Management (v1.4.0)
 - **[NEW] Settings Page**: Personal preferences accessible at `/settings` for all authenticated users
 - **[NEW] Tiered Theme Access**: 
   - Free: 3 themes (light, dark, synthwave)

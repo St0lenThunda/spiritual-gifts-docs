@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-26 | [UI Enhancements Finalized](./2025-12-26-ui-enhancements-finalized.md) | Unlocked all themes, refactored application logic, and cleanup. |
 | 2025-12-26 | [User Preferences & E2E Testing](./2025-12-26-user-preferences-testing.md) | Implemented tiered theme preferences with admin analytics and 100% E2E test coverage. |
 | 2025-12-26 | [Admin Consolidation](./2025-12-26-admin-consolidation.md) | Consolidated Organization and Theming into Admin Dashboard sidebar. |
 | 2025-12-26 | [Admin Dashboard Refactor](./2025-12-26-admin-dashboard-refactor.md) | Refactored layout to use persistent sidebar and improved content transitions. |
