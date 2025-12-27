@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.4.1 (Released) | Updated: 2025-12-26*
+*Version: 1.4.4 (Released) | Updated: 2025-12-26*
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
@@ -28,7 +28,8 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 - 📄 **Themed PDF Export** - Digital (dark) and Print (light) modes
 - 👑 **Admin Dashboard** - Consolidated interface for Logs, Users, Schema, Organization, and Theming
 - ♿ **Accessibility** - WCAG 2.1 AA, high-contrast mode, keyboard navigation
-- 🏢 **Organization Settings** - Manage branding, members, and tier limits (Standalone or Embedded)
+- 🏢 **Organization Settings** - Manage branding, members, and tier limits with "Join or Create" flow
+- 👤 **Standalone Mode** - Option for individual users to bypass organization setup for personal discernment
 - 🎯 **Domain-Driven Architecture** - Isolated logic for Auth, Org, Assessment, and Billing
 - 🎨 **User Preferences** - Tiered theme selection with visual previews and analytics
 - ⚙️ **Settings Page** - Personal preferences accessible at `/settings` for authenticated users
@@ -49,7 +50,7 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Suite | Status |
 |-------|--------|
-| Backend (pytest) | **167 passed / 3 failed (98% coverage)** ✅ |
+| Backend (pytest) | **198 passed / 0 failed (98.5% coverage)** ✅ |
 | Frontend Unit (Vitest) | **160 passed / 0 failed (100% coverage)** ✅ |
 | E2E Production Tests (Playwright) | **19 passed / 0 failed (100% pass rate)** ✅ |
 
@@ -57,9 +58,8 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 #### Backend
 ```text
-167 passed, 3 failed in 18.93s
-Coverage: 98% (13/13 preferences tests passing)
-Failures: Organization invitation mocks (non-critical)
+198 passed, 0 failed in 19.45s
+Coverage: 98.5% (All organization tests passing)
 ```
 *User preferences tests achieve 97% code coverage with 100% pass rate.*
 
@@ -202,9 +202,24 @@ All core features stable and production-ready as of v1.4.0.
 
 ---
 
-## ✅ Recently Completed (v1.4.1 - 2025-12-26) 🆕
+### Membership Approval Flow & Standalone Mode (v1.4.5 - 2025-12-26) 🆕
+- **[NEW] Request to Join**: Users can search for an organization and request membership, which administrators must approve before granting access to dashboard data.
+- **[NEW] Individual Standalone Mode**: Fully supported bypass for users who want to use assessments without joining an organization. Available via user preferences.
+- **[NEW] Approval UI**: Integrated Approve/Reject actions in the Member Data Table for organization administrators.
+- **[NEW] Membership Security**: Updated `require_org` dependency to strictly enforce "active" status, preventing access for pending users.
+- **[FIX] Backend Test Hardening**: Fixed mock query inconsistencies and 500 errors in organization invitation tests.
 
-### UI Enhancements & Theme Consistency 🆕
+### Enhanced Organization Creation & Settings Consolidation (v1.4.2)
+- **[NEW] Searchable Org Creation**: Users can now search for existing organizations or create new ones with auto-suggested names
+- **[NEW] Intelligent Slug Generation**: Slugs are automatically derived from the organization name in real-time until manually overridden
+- **[NEW] Integrated Organization Management**: Moved Organization settings into the personal Settings sidebar for members
+- **[NEW] Consolidated Navigation**: Removed redundant "Organization" link from user dropdown, centralizing management within the Settings portal
+- **[NEW] Sidebar Navigation**: Replaced tab-based navigation with a master-detail sidebar layout (Admin aesthetic)
+- **[NEW] Notifications Section**: Dedicated preferences section for instruction modal visibility and cross-org sync
+- **[NEW] Floating Content Cards**: Implemented modern glassmorphism details view with spawn transitions
+- **[FIX] Preference Organization**: Decoupled notification toggles from the theme selection grid
+
+### UI Enhancements & Theme Consistency (v1.4.1)
 - **[NEW] Full Theme Unlock**: All 7 supported themes enabled in the UI (Light, Dark, Synthwave, Living Water, Dove's Wing, Celestial, Sacred)
 - **[NEW] "Do Not Show Again" Instructions**: Implemented user preference to hide assessment directions modal
 - **[FIX] Instant Theme Application**: Refactored logic to use class-based application on `body` for flicker-free transitions
