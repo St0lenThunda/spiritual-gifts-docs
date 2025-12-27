@@ -207,6 +207,13 @@ All core features stable and production-ready as of v1.4.0.
 - **[NEW] Integrated Switcher**: Language selection moved to User Dropdown for a cleaner, app-like feel.
 - **[FIX] Test Mocks**: Hardened test environment with comprehensive i18n mock keys.
 
+### Navigation & Localization Refinements (v1.5.2 - 2025-12-26) 🆕
+- **[NEW] Streamlined Navigation**: Integrated "Recent Results" directly into the dashboard for a cleaner experience.
+- **[NEW] Organization Context**: Added organization name display to the User Dropdown for immediate context.
+- **[NEW] Enhanced Language Menu**: Refactored language switcher into an accordion-style sub-menu within the user dropdown.
+- **[FIX] Deep Localization**: Fixed synchronization issues on the Gift Definitions page to respect locale changes immediately.
+- **[FIX] Scripture Translation**: Implemented dynamic Bible version fetching and fallback logic to ensuring translated scripture text is always displayed.
+
 ### i18n Alignment & Terminology Refinement (v1.5.0 - 2025-12-26)
 - **[NEW] Global Gift Localization**: Spiritual gift names are now fully internationalized across all charts, profiles, and analytics.
 - **[NEW] Appearance Settings Enhancement**: Renamed the "Preferences" tab to "Appearance" in the settings layout to improve terminology accuracy.
