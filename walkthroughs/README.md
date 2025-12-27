@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-26 | [i18n Sync & Terminology](./2025-12-26-i18n-sync-and-terminology.md) | Standardized i18n across org settings and corrected preferences terminology. |
+| 2025-12-26 | [Admin Member Editing](./2025-12-26-admin-member-editing.md) | Implemented role and affiliation editing for admins. |
 | 2025-12-26 | [Membership Approval Flow](./2025-12-26-membership-approval-flow.md) | Implemented "Request to Join" flow and Standalone Mode. |
 | 2025-12-26 | [Settings Sidebar Refactor](./2025-12-26-settings-sidebar-refactor.md) | Refactored settings to match Admin Dashboard sidebar layout. |
 | 2025-12-26 | [UI Enhancements Finalized](./2025-12-26-ui-enhancements-finalized.md) | Unlocked all themes, refactored application logic, and cleanup. |

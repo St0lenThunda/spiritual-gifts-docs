@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.4.4 (Released) | Updated: 2025-12-26*
+*Version: 1.5.0 (Released) | Updated: 2025-12-26*
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
@@ -121,7 +121,7 @@ Coverage: 98.5% (All organization tests passing)
 - [x] Role-based UI optimization
 
 ### Phase 6: Scale (Next)
-- [ ] Complete i18n for user preferences (ES, FR, RU)
+- [x] Complete i18n for user preferences (ES, FR, RU)
 - [ ] SSO integration (SAML/OAuth)
 - [ ] Custom branding per org (dynamic injection)
 - [ ] API access for integrations
@@ -133,7 +133,6 @@ Coverage: 98.5% (All organization tests passing)
 
 | Category | Item | Priority | Status |
 |----------|------|----------|--------|
-| **i18n** | Translate user preferences UI | High | 🆕 Next |
 | **Testing** | CI/CD with GitHub Actions | High | Planned |
 | **UX** | Custom theme creation (Church tier) | Medium | Suggested |
 | **DevOps** | Automated deployment pipeline | High | Planned |
@@ -202,8 +201,14 @@ All core features stable and production-ready as of v1.4.0.
 
 ---
 
-### Membership Approval Flow & Standalone Mode (v1.4.5 - 2025-12-26) 🆕
-- **[NEW] Request to Join**: Users can search for an organization and request membership, which administrators must approve before granting access to dashboard data.
+### i18n Alignment & Terminology Refinement (v1.5.0 - 2025-12-26) 🆕
+- **[NEW] Global Gift Localization**: Spiritual gift names are now fully internationalized across all charts, profiles, and analytics.
+- **[NEW] Appearance Settings Enhancement**: Renamed the "Preferences" tab to "Appearance" in the settings layout to improve terminology accuracy.
+- **[NEW] All-Locale Sync**: Completed synchronization of `es.json`, `fr.json`, and `ru.json` with latest branding and analytics keys.
+- **[NEW] Standardized Component i18n**: Fully internationalized `BrandingSettings.vue`, `OrgAnalytics.vue`, and `MemberDetailModal.vue`.
+- **[FIX] Terminology Consistency**: Refined toast messages and headers to distinguish between "Appearance" (themes) and "Preferences" (instructions/sync).
+
+### Membership Approval Flow & Standalone Mode (v1.4.5 - 2025-12-26)
 - **[NEW] Individual Standalone Mode**: Fully supported bypass for users who want to use assessments without joining an organization. Available via user preferences.
 - **[NEW] Approval UI**: Integrated Approve/Reject actions in the Member Data Table for organization administrators.
 - **[NEW] Membership Security**: Updated `require_org` dependency to strictly enforce "active" status, preventing access for pending users.
