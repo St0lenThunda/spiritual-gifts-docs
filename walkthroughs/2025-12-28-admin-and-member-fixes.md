@@ -32,6 +32,15 @@ Addressed several user-reported issues including broken Admin Member selection, 
 - `frontend/src/components/organization/MemberDetailModal.vue` - Enhanced UI and logic.
 - `frontend/src/locales/*.json` - Synced gift keys.
 
+## Chart Link Fixes
+- **Issue**: Links from specific charts were broken due to case sensitivity and race conditions.
+- **Fix**:
+  - Implemented `normalizedGifts` computed property in `GiftDefinitions.vue` for robust case-insensitive lookup.
+  - Added race condition protection using `nextTick`.
+  - Updated charts to use lowercase query parameters.
+  - Added `tests/e2e/definitions-linking.spec.js` to verify.
+
+
 ## Verification
 - Verified Admin can click member row to open modal.
 - Verified non-admins do not see Organization tab.
