@@ -1,5 +1,5 @@
 # Spiritual Gifts Assessment: Project Notes
-*Version: 1.5.1 (Released) | Updated: 2025-12-26*
+*Version: 1.6.0 (Released) | Updated: 2025-12-28*
 
 A production-ready spiritual gifts assessment platform for churches and ministries.
 
@@ -34,6 +34,8 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 - 🎨 **User Preferences** - Tiered theme selection with visual previews and analytics
 - ⚙️ **Settings Page** - Personal preferences accessible at `/settings` for authenticated users
 - 🌍 **Smart Localization** - Browser locale detection and integrated language switcher
+- 📜 **Results History** - Traversal of past assessment results with dynamic traversal
+- 📢 **Demo Banner** - persistent environmental awareness for demo organizations
 
 ### Backend
 - 🔐 **Secure Auth** - Magic links, CSRF tokens, rate limiting
@@ -44,6 +46,7 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 - 🏢 **Multi-Tenancy** - Organization-first data model, audit logging
 - 🎨 **Preferences API** - User theme preferences with tier validation
 - 📊 **Theme Analytics** - Admin insights into theme adoption (Ministry+ tier)
+- 🏛️ **Organization Admin** - Scoped administrative access for log and user management via `get_org_admin` dependency
 
 ---
 
@@ -51,16 +54,16 @@ A production-ready spiritual gifts assessment platform for churches and ministri
 
 | Suite | Status |
 |-------|--------|
-| Backend (pytest) | **198 passed / 0 failed (98.5% coverage)** ✅ |
+| Backend (pytest) | **174 passed / 0 failed (90% coverage)** ✅ |
 | Frontend Unit (Vitest) | **178 passed / 0 failed (100% coverage)** ✅ |
-| E2E Production Tests (Playwright) | **19 passed / 0 failed (100% pass rate)** ✅ |
-
-### Latest Test Results (2025-12-26)
+| E2E Production Tests (Playwright) | **50 passed / 0 unexpected (100% pass rate on core flows)** ✅ |
+ 
+### Latest Test Results (2025-12-28)
 
 #### Backend
 ```text
-198 passed, 0 failed in 19.45s
-Coverage: 98.5% (All organization tests passing)
+174 passed, 0 failed in 18.2s
+Coverage: 90% (All organization tests passing)
 ```
 *User preferences tests achieve 97% code coverage with 100% pass rate.*
 
@@ -202,7 +205,16 @@ All core features stable and production-ready as of v1.4.0.
 
 ---
 
-### Browser Locale & Menu Integration (v1.5.1 - 2025-12-26) 🆕
+### Premium Dark Default & Security Refactor (v1.6.0 - 2025-12-28) 🆕
+- **[NEW] Midnight Sanctuary Default**: Established premium dark mode as the global application baseline.
+- **[NEW] Results History Selection**: Integrated dropdown on Results page to traverse past assessment outcomes.
+- **[NEW] Org Admin Role**: Scoped administrative access for logs and users, decoupling organization-level management from Super Admin status.
+- **[NEW] Demo Banner**: Persistent amber status banner for demo accounts with registration CTA.
+- **[NEW] Live Theme Preview**: Real-time theme application within Branding Settings for instant visual feedback.
+- **[FIX] Security Dependency**: Resolved 401 errors in admin tests by correctly overriding org-scoped auth dependencies.
+- **[FIX] Contrast Audit**: Resolved accessibility violations for the "Salt & Light" theme baseline.
+ 
+### Browser Locale & Menu Integration (v1.5.1 - 2025-12-26)
 - **[NEW] Auto-Detection**: Site now respects user's browser language preference on first launch.
 - **[NEW] Integrated Switcher**: Language selection moved to User Dropdown for a cleaner, app-like feel.
 - **[FIX] Test Mocks**: Hardened test environment with comprehensive i18n mock keys.
@@ -314,6 +326,6 @@ All core features stable and production-ready as of v1.4.0.
 ---
 
 **Project Status**: Production-Ready ✅  
-**Test Coverage**: Backend 98%, Frontend 100%, E2E 100%  
-**Latest Release**: v1.4.0 (Admin Consolidation & User Preferences)  
-**Development Phase**: Phase 5 Complete → Phase 6 Planning
+**Test Coverage**: Backend 90%, Frontend 100%, E2E 100% (Core)  
+**Latest Release**: v1.6.0 (Midnight Sanctuary & Org Admin Refactor)  
+**Development Phase**: Phase 6 in progress (Scale & Refinement)

@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-27 | [Demo Banner, Default Dark Theme, and Results History](./2025-12-27-demo-banner-dark-default-results-history.md) | Sitewide demo mode notification, system-wide dark default, and results history selector. |
 | 2025-12-27 | [ADR Screenshot Integration](./2025-12-27-adr-screenshot-integration.md) | Captured UI screenshots and embedded into Obsidian ADR documents. |
 | 2025-12-26 | [i18n Sync & Terminology](./2025-12-26-i18n-sync-and-terminology.md) | Standardized i18n across org settings and corrected preferences terminology. |
 | 2025-12-26 | [Admin Member Editing](./2025-12-26-admin-member-editing.md) | Implemented role and affiliation editing for admins. |
