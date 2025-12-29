@@ -6,6 +6,9 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-28 | [Onboarding & Notifications](./2025-12-28-onboarding-workflow.md) | Added New User Onboarding Modal, Admin Pending Alerts, and Dropdown Indicators. |
+| 2025-12-28 | [Org Visibility Refinement](./2025-12-28-org-visibility-refinement.md) | Enabled Org tab for all, hid Members tab for non-admins, show affiliation. |
+| 2025-12-28 | [Member Edit Visibility Fix](./2025-12-28-member-edit-visibility.md) | Fixed missing edit link, added pencil icon, and enabled direct-edit mode for org members. |
 | 2024-12-28 | [ADR Frontmatter Standardization](./2024-12-28-adr-frontmatter-standardization.md) | Standardized metadata fields across all ADRs for improved tracking and automation. |
 | 2025-12-28 | [Admin and Member Fixes](./2025-12-28-admin-and-member-fixes.md) | Fixed admin selection, org visibility, and i18n issues. |
 | 2025-12-27 | [Demo Banner & Dark Default](./2025-12-27-demo-banner-dark-default-results-history.md) | Added demo banner, set dark theme default, fixed history. |
