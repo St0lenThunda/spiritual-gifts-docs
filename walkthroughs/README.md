@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-30 | [Session, Onboarding & Stats Fixes](./2025-12-30-session-onboarding-stats-fixes.md) | Resolved session expiry, corrected onboarding, and filtered 'overall' stats. |
+| 2025-12-30 | [Branding & Localization Fix](./2025-12-30-branding-localization-fix.md) | Resolved brand inconsistencies and localization warnings. |
 | 2025-12-30 | [Member Multi-Select & Bulk Actions](./2025-12-30-member-multi-select.md) | Bulk member approval and rejection efficiency improvements. |
 | 2025-12-30 | [Onboarding Visibility Refinement](./2025-12-30-onboarding-visibility-refinement.md) | Prevented onboarding modal for admins and affiliated users. |
 | 2025-12-29 | [Onboarding Stability Fixes](./2025-12-29-onboarding-stability-fixes.md) | Resolved timeouts and navigation failures in E2E onboarding tests. |

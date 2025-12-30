@@ -10,14 +10,15 @@ Enhanced the member management UI to support multi-selection and bulk operations
 - **Multi-Select**: Added a checkbox column to `MemberDataTable` with "Select All" functionality.
 - **Bulk Approval**: Implemented `POST /organizations/members/bulk-approve` to approve multiple pending members with tier limit enforcement.
 - **Bulk Rejection**: Implemented `POST /organizations/members/bulk-reject` to remove multiple members from the organization.
+- **Member Role Editing**: Fixed a bug where saving a member's role was failing due to a missing store export and backend schema mismatch.
 - **Localized UI**: Added localized strings for bulk actions in English, Spanish, French, and Russian.
 - **TypeScript Type Safety**: Added type declaration for the API client to resolve lint errors.
 
 ## Implementation Details
 
 ### Backend
-- Added `OrganizationBulkAction` schema to `schemas.py`.
-- Implemented bulk endpoints in `organizations.py` with:
+- Added `OrganizationBulkAction` and `OrganizationMemberUpdate` schemas to `schemas.py`.
+- Implemented bulk endpoints and single member update endpoint in `organizations.py` with:
     - Permission checks (admin only).
     - Tier limit enforcement during bulk approval.
     - Audit logging for each individual action within the batch.
@@ -44,8 +45,9 @@ Enhanced the member management UI to support multi-selection and bulk operations
 - Created `backend/tests/test_bulk_actions.py` covering:
     - Successful bulk approval.
     - Successful bulk rejection.
+    - Successful single member role update.
     - Tier limit enforcement (403 Forbidden when slots are full).
-- Ran tests via `pytest`: `3 passed in 0.14s`.
+- Ran tests via `pytest`: `4 passed in 0.17s`.
 
 ### Manual Verification
 - Verified multi-select UI in `OrganizationSettings.vue`.
