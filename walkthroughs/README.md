@@ -6,6 +6,9 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-29 | [Onboarding Stability Fixes](./2025-12-29-onboarding-stability-fixes.md) | Resolved timeouts and navigation failures in E2E onboarding tests. |
+| 2025-12-29 | [Default Organization Selection](./2025-12-29-default-organization-selection.md) | Defaulted Settings and Leadership Overview to Organization tab. |
+| 2025-12-28 | [Billing, Org & Theme Fixes](./2025-12-28-fixes-billing-org-theme.md) | Fixed Billing 500 error, Standalone Mode join flow, and Theme persistence. |
 | 2025-12-28 | [Onboarding & Notifications](./2025-12-28-onboarding-workflow.md) | Added New User Onboarding Modal, Admin Pending Alerts, and Dropdown Indicators. |
 | 2025-12-28 | [Org Visibility Refinement](./2025-12-28-org-visibility-refinement.md) | Enabled Org tab for all, hid Members tab for non-admins, show affiliation. |
 | 2025-12-28 | [Member Edit Visibility Fix](./2025-12-28-member-edit-visibility.md) | Fixed missing edit link, added pencil icon, and enabled direct-edit mode for org members. |
