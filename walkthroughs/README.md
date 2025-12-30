@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-30 | [Member Multi-Select & Bulk Actions](./2025-12-30-member-multi-select.md) | Bulk member approval and rejection efficiency improvements. |
+| 2025-12-30 | [Onboarding Visibility Refinement](./2025-12-30-onboarding-visibility-refinement.md) | Prevented onboarding modal for admins and affiliated users. |
 | 2025-12-29 | [Onboarding Stability Fixes](./2025-12-29-onboarding-stability-fixes.md) | Resolved timeouts and navigation failures in E2E onboarding tests. |
 | 2025-12-29 | [Default Organization Selection](./2025-12-29-default-organization-selection.md) | Defaulted Settings and Leadership Overview to Organization tab. |
 | 2025-12-28 | [Billing, Org & Theme Fixes](./2025-12-28-fixes-billing-org-theme.md) | Fixed Billing 500 error, Standalone Mode join flow, and Theme persistence. |
