@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-30 | [ADR-018 Sales Integration](./2025-12-30-surface-adr-018-sales-docs.md) | Surfaced Anonymized Analytics Insights in sales and outreach documentation as a trust lever. |
+| 2024-05-22 | [Pastoral Tone Refinement](./2024-05-22-pastoral-toast-tone.md) | Refined notification and UI copy for pastoral and supportive tone. |
 | 2025-12-30 | [Session, Onboarding & Stats Fixes](./2025-12-30-session-onboarding-stats-fixes.md) | Resolved session expiry, corrected onboarding, and filtered 'overall' stats. |
 | 2025-12-30 | [Branding & Localization Fix](./2025-12-30-branding-localization-fix.md) | Resolved brand inconsistencies and localization warnings. |
 | 2025-12-30 | [Member Multi-Select & Bulk Actions](./2025-12-30-member-multi-select.md) | Bulk member approval and rejection efficiency improvements. |
