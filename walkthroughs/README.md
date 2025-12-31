@@ -6,6 +6,9 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-31 | [Multi-Denominational Support](./2025-12-31-multi-denominational-support.md) | Implemented backend/frontend support for multiple theological interpretations (Model C). |
+| 2025-12-30 | [Public Docs Setup](./2025-12-30-public-docs-setup.md) | Implemented an "easy" way to show public-facing documents using `visibility: public` and an updated workflow. |
+| 2025-12-30 | [Public Documentation Set](./2025-12-30-public-documentation-set.md) | Produced a pastor-safe, sales-ready, non-technical public documentation set derived from tags. |
 | 2025-12-30 | [ADR-018 Sales Integration](./2025-12-30-surface-adr-018-sales-docs.md) | Surfaced Anonymized Analytics Insights in sales and outreach documentation as a trust lever. |
 | 2024-05-22 | [Pastoral Tone Refinement](./2024-05-22-pastoral-toast-tone.md) | Refined notification and UI copy for pastoral and supportive tone. |
 | 2025-12-30 | [Session, Onboarding & Stats Fixes](./2025-12-30-session-onboarding-stats-fixes.md) | Resolved session expiry, corrected onboarding, and filtered 'overall' stats. |
