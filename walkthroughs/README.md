@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-31 | [Denomination API Fix](./2025-12-31-fix-denomination-api.md) | Resolved 500 error on denominations endpoint and synced database schema. |
 | 2025-12-31 | [Scripture Text Population](./2025-12-31-scripture-text-population.md) | Enriched all ScriptureSet entries with full KJV, NIV, and ESV texts. |
 | 2025-12-31 | [v1.8.0 Release Verification](./2025-12-31-v1-8-0-release-verification.md) | Comprehensive verification of Member Lifecycle, Assessment History, Gift Normalization, and i18n logic. |
 | 2025-12-31 | [Multi-Denominational Support](./2025-12-31-multi-denominational-support.md) | Implemented backend/frontend support for multiple theological interpretations (Model C). |
