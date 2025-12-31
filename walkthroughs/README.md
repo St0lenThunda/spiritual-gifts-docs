@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2025-12-31 | [Scripture Text Population](./2025-12-31-scripture-text-population.md) | Enriched all ScriptureSet entries with full KJV, NIV, and ESV texts. |
+| 2025-12-31 | [v1.8.0 Release Verification](./2025-12-31-v1-8-0-release-verification.md) | Comprehensive verification of Member Lifecycle, Assessment History, Gift Normalization, and i18n logic. |
 | 2025-12-31 | [Multi-Denominational Support](./2025-12-31-multi-denominational-support.md) | Implemented backend/frontend support for multiple theological interpretations (Model C). |
 | 2025-12-30 | [Public Docs Setup](./2025-12-30-public-docs-setup.md) | Implemented an "easy" way to show public-facing documents using `visibility: public` and an updated workflow. |
 | 2025-12-30 | [Public Documentation Set](./2025-12-30-public-documentation-set.md) | Produced a pastor-safe, sales-ready, non-technical public documentation set derived from tags. |
