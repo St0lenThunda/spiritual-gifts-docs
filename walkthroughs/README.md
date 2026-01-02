@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2026-01-02 | [FAQ Page Implementation](./2026-01-02-faq-page.md) | Added responsive FAQ page with localizable content and integrated into navigation. |
 | 2026-01-01 | [E2E Test Stabilization](./2026-01-01-e2e-test-fixes.md) | Stabilized full Playwright suite by fixing timeouts, RBAC logic, and authentication helpers. |
 | 2025-12-31 | [Theme Sync on Login](./2025-12-31-theme-sync-fix.md) | Resolved delayed theme application after login by centralizing resolution and improving app initialization. |
 | 2025-12-31 | [Theme Popover i18n & Visibility](./2025-12-31-theme-popover-i18n.md) | Standardized preset popover styling and localized color labels. |
