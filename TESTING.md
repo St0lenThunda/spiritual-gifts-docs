@@ -160,6 +160,7 @@ npm run test:e2e:visual
 - **Projects**: Chromium, Firefox, WebKit, Mobile (iPhone 14, Pixel 7)
 - **Retries**: 2 in CI, 0 locally
 - **Visual Regression**: 5% pixel tolerance
+- **Timeout**: 60000ms (Global)
 
 ### Test Data
 Uses sample users from `USAGE.md`:
