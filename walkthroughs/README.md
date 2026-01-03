@@ -5,7 +5,10 @@ This directory contains documentation of key implementation milestones and fixes
 ## Index
 
 | Date | Walkthrough | Description |
-|------|-------------|-------------|
+| 2026-01-03 | [Striped Tables for Readability](./2026-01-03-striped-tables-for-readability.md) | Added global striped styling for all tables. |
+| 2026-01-03 | [iPhone SE UI Optimization](./2026-01-03-iphone-se-ui-optimization.md) | Optimized mobile UI for iPhone SE and authenticated users. |
+| 2026-01-03 | [Restricted Audit Log Visibility](./2026-01-03-restricted-audit-log-visibility.md) | Secured audit logs for admin/super_admin roles only. |
+| 2026-01-03 | [UI Axios Error Fixes](./2026-01-03-ui-axios-error-fixes.md) | Resolved backend JSON serialization and database schema errors. |
 | 2026-01-03 | [Backend Coverage Finalization](./2026-01-03-backend-test-coverage-finalization.md) | Finalized backend coverage (97%) and resolved legacy warnings. |
 | 2026-01-02 | [Super Admin Visibility Fix](./2026-01-02-super-admin-visibility-fix.md) | Fixed RBAC visibility and navigation for super admins. |
 | 2026-01-02 | [RBAC Super Admin Support](./2026-01-02-rbac-super-admin-support.md) | Added support for "super_admin" role in backend schemas and auth. |
