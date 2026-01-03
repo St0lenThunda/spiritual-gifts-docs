@@ -6,6 +6,8 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |------|-------------|-------------|
+| 2026-01-02 | [Super Admin Visibility Fix](./2026-01-02-super-admin-visibility-fix.md) | Fixed RBAC visibility and navigation for super admins. |
+| 2026-01-02 | [RBAC Super Admin Support](./2026-01-02-rbac-super-admin-support.md) | Added support for "super_admin" role in backend schemas and auth. |
 | 2026-01-02 | [Sidebar Consolidation](./2026-01-02-sidebar-consolidation.md) | Unified Admin and Settings sidebars into a single `AppSidebar` component. |
 | 2026-01-02 | [Admin Sidebar Subscription Level](./2026-01-02-admin-sidebar-plan.md) | Added stylized subscription level indicator to Admin Sidebar |
 | 2026-01-02 | [FAQ Page Implementation](./2026-01-02-faq-page.md) | Created FAQ page, route, and navigation with localizable content and integrated into navigation. |
