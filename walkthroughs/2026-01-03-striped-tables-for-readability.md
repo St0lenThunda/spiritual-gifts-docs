@@ -9,6 +9,7 @@ Implemented global zebra-striping for all tables within the application to enhan
 ## Issues Addressed / Features Added
 - Added global CSS rule for striped table rows.
 - Improved readability of member, user, and audit log tables.
+- Made system log and user filters accessible on mobile devices by moving them to the contextual tab header in the Admin Dashboard.
 
 ## Implementation Details
 A global CSS rule was added to `main.css` targeting the even rows of all table bodies.
@@ -20,10 +21,13 @@ tbody tr:nth-child(even) {
 }
 ```
 
+The action buttons (Filter, Refresh) were moved from the desktop-only header in `AdminDashboard.vue` to the common tab header that is visible on all screen sizes. This ensures that mobile users can access filtering functionality.
+
 This uses the existing `--color-bg-muted` variable, which provides a better contrast against the base background across all themes (Midnight Sanctuary, Salt & Light, etc.).
 
 ## Files Created/Modified
 - `frontend/src/assets/main.css` - Added global table striping rule.
+- `frontend/src/pages/AdminDashboard.vue` - Moved action buttons to tab header for mobile accessibility.
 
 ## Verification
 ### Automated Tests

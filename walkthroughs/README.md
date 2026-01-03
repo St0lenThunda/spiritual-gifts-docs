@@ -5,7 +5,9 @@ This directory contains documentation of key implementation milestones and fixes
 ## Index
 
 | Date | Walkthrough | Description |
-| 2026-01-03 | [Striped Tables for Readability](./2026-01-03-striped-tables-for-readability.md) | Added global striped styling for all tables. |
+|---|---|---|
+| 2026-01-03 | [Admin UI Readability & Translation Fixes](./2026-01-03-admin-ui-readability-and-translation-fixes.md) | Fixed mobile filter accessibility, dropdown readability, and table translations. |
+| 2026-01-03 | [Striped Tables for Readability](./2026-01-03-striped-tables-for-readability.md) | Implemented global table striping for improved data readability. |
 | 2026-01-03 | [iPhone SE UI Optimization](./2026-01-03-iphone-se-ui-optimization.md) | Optimized mobile UI for iPhone SE and authenticated users. |
 | 2026-01-03 | [Restricted Audit Log Visibility](./2026-01-03-restricted-audit-log-visibility.md) | Secured audit logs for admin/super_admin roles only. |
 | 2026-01-03 | [UI Axios Error Fixes](./2026-01-03-ui-axios-error-fixes.md) | Resolved backend JSON serialization and database schema errors. |
