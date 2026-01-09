@@ -9,6 +9,7 @@ Fixed the "dev mode" indicator and bypass-login functionality in the login scree
 ## Issues Addressed / Features Added
 - Resolved hardcoded `devMode = true` in `Login.vue`.
 - Implemented environment-aware logic to only enable dev mode in development environments.
+- Fixed 404 errors in production caused by double-slashes in API URL concatenation.
 
 ## Implementation Details
 Updated `Login.vue` to use Vite's `import.meta.env.DEV` instead of a hardcoded boolean.
