@@ -4,23 +4,26 @@
 **Status**: Completed ✅
 
 ## Summary
-Resolved a `400 Bad Request` (CSRF validation failed) error and relaxed rate limits to facilitate troubleshooting for cross-site authentication between Netlify and Render.
+Resolved a `400 Bad Request` (CSRF validation failed) error and relaxed rate limits to facilitate troubleshooting for cross-site authentication between Netlify and Render. This iteration adds a debug endpoint and centralized configuration for better stability.
 
 ## Issues Addressed / Features Added
 - Fixed CSRF validation failures in cross-site production environments.
 - Enabled `SameSite=None` and `Secure` attributes for CSRF cookies in production.
-- Relaxed `/auth/send-link` rate limit from `3/10minutes` to `10/10minutes`.
-- Enhanced CSRF failure logging with request headers and cookies for better diagnostics.
+- Relaxed `/auth/send-link` rate limit further to `30/10minutes`.
+- Enhanced CSRF failure logging with request headers and cookies.
+- Added `/auth/debug-csrf` endpoint for detailed server-side diagnostics.
 
 ## Implementation Details
-1.  **CSRF Configuration**: Updated `CsrfSettings` in `app/main.py` to use `SameSite=None` and `Secure` in production.
-2.  **Rate Limiting**: Increased the limit for the magic link endpoint in `app/routers/__init__.py` to allow more attempts during debugging.
-3.  **Enhanced Logging**: Modified `csrf_protect_exception_handler` in `app/main.py` to log relevant headers (Origin, Referer, X-CSRF-Token) and cookie names, helping identify why validation fails.
+1.  **Centralized Configuration**: Moved `CsrfSettings` to `app/config.py` for more reliable initialization and explicit cookie naming (`fastapi-csrf-protect`).
+2.  **Rate Limiting**: Increased the limit for the magic link endpoint to `30/10minutes` to avoid blocking developers during testing.
+3.  **Enhanced Logging**: Maintained detailed verbose logging in the exception handler to show headers (Origin, Referer, X-CSRF-Token) and cookie presence.
+4.  **Debug Endpoint**: Implemented a new POST endpoint `/auth/debug-csrf` that returns the current CSRF validation status and the raw headers/cookies received by the server without raising a 400 error.
 
 ## Files Created/Modified
-- `app/main.py` - Updated `CsrfSettings` and enhanced error logging.
-- `app/routers/__init__.py` - Relaxed rate limits for magic link sending.
+- `app/config.py` - Centralized `CsrfSettings`.
+- `app/main.py` - Updated to use centralized config and enhanced error logging.
+- `app/routers/__init__.py` - Relaxed rate limits and added `/auth/debug-csrf`.
 
 ## Verification
 - Deployed to Render and monitored logs for `csrf_violation` entries.
-- Confirmed that multiple login attempts can be made without hitting the `429` error prematurely.
+- Used the `/auth/debug-csrf` endpoint to cross-reference browser state with server perception.
