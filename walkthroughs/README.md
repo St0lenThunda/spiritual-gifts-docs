@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |---|---|---|
+| 2026-01-08 | [Header-Based Security Migration](./2026-01-08-migrate-to-header-based-security.md) | Replaced problematic cookie-based CSRF with robust Origin/Header validation. |
 | 2026-01-08 | [CSRF Kill Switch & Diagnostics](./2026-01-08-fix-csrf-outage-and-killswitch.md) | Implemented CSRF_ENABLED kill switch and advanced diagnostics to resolve auth outage. |
 | 2026-01-08 | [Cross-Site CSRF Validation Fix](./2026-01-08-fix-cross-site-csrf-validation.md) | Fixed CSRF validation, relaxed rate limits, and added debug tools for Netlify-to-Render flow. |
 | 2026-01-08 | [Fix Missing Stripe Dependency](./2026-01-08-fix-missing-stripe-dependency.md) | Fixed ModuleNotFoundError: No module named 'stripe' in backend. |
