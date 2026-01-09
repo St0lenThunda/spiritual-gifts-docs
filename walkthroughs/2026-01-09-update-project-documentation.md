@@ -8,7 +8,9 @@ Updated project documentation to reflect the recent security migration and curre
 
 ## Issues Addressed / Features Added
 - **Security Migration Reference**: Documented the shift from cookie-based CSRF to modern header-based validation.
-- **Version Bump**: Increment to `v1.10.0` to signal significant architectural security changes.
+- **Legacy CSRF Cleanup**: Identified and removed leftover `CsrfProtect` dependencies in `billing` and `survey_drafts` routers that were causing 500 errors.
+- **Diagnostic Logging**: Added detailed error logging for Neon Auth API calls to identify external failures.
+- **Version Bump**: Increment to `v1.10.0` across all repositories to signal significant architectural security changes.
 - **Test Coverage**: Captured and documented current backend (94% coverage) and frontend pass rates.
 - **Roadmap Synchronization**: Updated the Obsidian `Project Status & Roadmap.md` with the latest accomplishments and future goals.
 
