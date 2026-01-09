@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |---|---|---|
+| 2026-01-08 | [Cross-Site CSRF Validation Fix](./2026-01-08-fix-cross-site-csrf-validation.md) | Fixed CSRF validation failure between Netlify frontend and Render backend. |
 | 2026-01-08 | [Fix Missing Stripe Dependency](./2026-01-08-fix-missing-stripe-dependency.md) | Fixed ModuleNotFoundError: No module named 'stripe' in backend. |
 | 2026-01-08 | [Login Dev Mode Indicator Fix](./2026-01-08-fix-login-dev-mode.md) | Fixed hardcoded dev mode indicator appearing in production. |
 | 2026-01-03 | [Admin UI Readability & Translation Fixes](./2026-01-03-admin-ui-readability-and-translation-fixes.md) | Fixed mobile filter accessibility, dropdown readability, and table translations. |
