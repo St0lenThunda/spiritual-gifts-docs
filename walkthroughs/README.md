@@ -6,6 +6,7 @@ This directory contains documentation of key implementation milestones and fixes
 
 | Date | Walkthrough | Description |
 |---|---|---|
+| 2026-01-09 | [Resolve Auth Errors](./2026-01-09-resolve-auth-errors.md) | Resolved 404 (CSRF) and 500 (Neon Auth) errors by correct URL routing and forcing a clean rebuild. |
 | 2026-01-09 | [Documentation Update](./2026-01-09-update-project-documentation.md) | Updated roadmap, test coverage, and version bump to v1.10.0 |
 | 2026-01-08 | [Header-Based Security Migration](./2026-01-08-migrate-to-header-based-security.md) | Replaced problematic cookie-based CSRF with robust Origin/Header validation. |
 | 2026-01-08 | [CSRF Kill Switch & Diagnostics](./2026-01-08-fix-csrf-outage-and-killswitch.md) | Implemented CSRF_ENABLED kill switch and advanced diagnostics to resolve auth outage. |
